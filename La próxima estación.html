@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La próxima estación</title>
+<style>
+:root{--bg:#f6f1e7;--card:#fffdf8;--ink:#2b2a33;--mut:#6d6a76;--acc:#c2542d;--acc2:#2f6f6a;--line:#e3dccb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1b21;--card:#26252d;--ink:#f0ecf5;--mut:#a9a5b3;--acc:#f08a5d;--acc2:#6fc2ba;--line:#3a3944}}
+:root[data-theme="dark"]{--bg:#1c1b21;--card:#26252d;--ink:#f0ecf5;--mut:#a9a5b3;--acc:#f08a5d;--acc2:#6fc2ba;--line:#3a3944}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:720px;margin:0 auto;padding:20px 18px 48px}
+h1{font-size:1.9rem;margin:.2em 0 0}
+.sub{color:var(--mut);margin:.2em 0 1em;font-family:system-ui,sans-serif;font-size:.95rem}
+.track{display:flex;align-items:center;margin:18px 0 22px;font-family:system-ui,sans-serif;font-size:.8rem}
+.stop{display:flex;flex-direction:column;align-items:center;gap:4px;flex:0 0 auto;width:86px;text-align:center;color:var(--mut)}
+.dot{width:26px;height:26px;border-radius:50%;border:3px solid var(--line);background:var(--card);display:grid;place-items:center;font-weight:700;font-size:.75rem}
+.stop.on{color:var(--ink);font-weight:600}.stop.on .dot{border-color:var(--acc);background:var(--acc);color:#fff}
+.stop.done .dot{border-color:var(--acc2);background:var(--acc2);color:#fff}
+.rail{flex:1;height:4px;background:repeating-linear-gradient(90deg,var(--line) 0 10px,transparent 10px 16px)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px;box-shadow:0 2px 0 var(--line)}
+.tag{font-family:system-ui,sans-serif;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);font-weight:700}
+h2{margin:.3em 0 .5em;font-size:1.4rem;line-height:1.3}
+textarea{width:100%;min-height:110px;padding:12px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{font:600 1rem system-ui,sans-serif;padding:12px 18px;border-radius:999px;border:2px solid var(--acc);background:var(--acc);color:#fff;cursor:pointer}
+button.ghost{background:transparent;color:var(--acc)}
+button.opt{background:var(--bg);color:var(--ink);border-color:var(--line);flex:1;min-width:150px}
+button.opt:hover{border-color:var(--acc)}
+button:disabled{opacity:.5;cursor:default}
+.situ{font-size:1.25rem;font-style:italic;margin:.2em 0 .4em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+.chip{font-family:system-ui,sans-serif;font-size:.85rem;padding:5px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.chip.s{border-color:var(--acc2);color:var(--acc2)}.chip.q{border-color:var(--acc)}
+h3{font:700 .8rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:16px 0 4px}
+.terr{border-left:4px solid var(--acc2);padding:4px 0 4px 14px;margin:14px 0}
+.terr b{font-size:1.1rem}
+.note{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--mut);margin-top:12px}
+.lv{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:6px 0;border-bottom:1px solid var(--line);font-family:system-ui,sans-serif;font-size:.95rem}.pts{color:var(--acc2);white-space:pre}
+.prog{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--mut)}
+</style>
+</head>
+<body>
+<main>
+<h1>La próxima estación</h1>
+<p class="sub">Un recorrido para explorar qué podés hacer con todo lo que ya construiste. No hay respuestas correctas ni un destino fijo.</p>
+<div class="track" id="track"></div>
+<div id="stage"></div>
+</main>
+<script>
+const QS=[
+ {k:"saberes",t:"¿Qué te consultan otros porque “vos de esto sabés”?"},
+ {k:"saberes",t:"¿Qué problema sabés resolver casi sin darte cuenta?"},
+ {k:"energias",t:"¿Qué parte de tu trabajo te gustaría conservar, la que te da energía?"},
+ {k:"basta",t:"¿Qué parte de tu trabajo ya no querés seguir haciendo?"}
+];
+const SK={escuchar:"Escucha y empatía",ensenar:"Enseñar y transmitir",ordenar:"Ordenar y sistematizar",facilitar:"Facilitar acuerdos",acompanar:"Acompañar y mentorear",actuar:"Tomar la iniciativa"};
+const CARDS=[
+ {t:"Una compañera nueva lleva dos semanas y todavía no entiende cómo funcionan realmente las cosas.",o:[["Me siento con ella y le cuento lo que no está escrito en ningún manual.","ensenar"],["Le digo que puede preguntarme lo que sea, y la invito a un café para conocernos.","acompanar"],["Armo una guía de una página con las reglas no escritas, para ella y para quien llegue después.","ordenar"]]},
+ {t:"Un equipo está trabado porque nadie logra ponerse de acuerdo.",o:[["Propongo que cada uno diga qué necesita de verdad antes de discutir soluciones.","facilitar"],["Hablo con cada persona por separado para entender qué hay detrás.","escuchar"],["Pongo sobre la mesa una propuesta razonable para destrabar.","actuar"]]},
+ {t:"Tenés que explicar algo muy complejo a personas que no son del tema.",o:[["Busco un ejemplo cotidiano que lo haga tangible.","ensenar"],["Lo divido en pasos y armo un esquema simple.","ordenar"],["Pregunto qué parte les resulta confusa y arranco desde ahí.","escuchar"]]},
+ {t:"Un cliente está muy enojado y hay que reconstruir la relación.",o:[["Lo dejo descargarse y le confirmo que entiendo cuál es el problema.","escuchar"],["Resuelvo hoy lo que se pueda y le aviso cada avance.","actuar"],["Reúno a las partes para acordar una salida que a todos les sirva.","facilitar"]]},
+ {t:"Nadie documentó un proceso importante y todo depende de la memoria de una sola persona.",o:[["Lo escribo yo, paso a paso, para que no dependa de nadie.","ordenar"],["Me siento con esa persona y la acompaño a transmitirlo a su modo.","acompanar"],["Empiezo a hacerlo con ella y lo voy documentando sobre la marcha.","actuar"]]},
+ {t:"Alguien más joven necesita criterio para tomar una decisión y no tiene con quién conversarla.",o:[["Le hago preguntas para que llegue a su propia decisión.","acompanar"],["Le cuento una situación parecida que viví y qué aprendí de ella.","ensenar"],["Le ayudo a poner en una hoja pros, contras y riesgos.","ordenar"]]}
+];
+const S={step:0,q:0,ans:{saberes:[],energias:[],basta:[]},c:0,picks:[],ai:null};
+const $=(t,a={},...k)=>{const e=document.createElement(t);for(const x in a){x==="class"?e.className=a[x]:x==="onclick"?e.onclick=a[x]:e.setAttribute(x,a[x])}k.forEach(c=>e.append(c));return e};
+function track(){
+ const T=document.getElementById("track");T.innerHTML="";
+ ["¿Dónde estoy?","¿Qué harías?","Mapa y posibilidades"].forEach((n,i)=>{
+  if(i)T.append($("div",{class:"rail"}));
+  T.append($("div",{class:"stop"+(i===S.step?" on":i<S.step?" done":"")},$("div",{class:"dot"},String(i+1)),n));
+ });
+}
+function station1(){
+ const q=QS[S.q],box=$("div",{class:"card"});
+ const ta=$("textarea",{placeholder:"Escribí con tus palabras. Podés dejarla vacía y seguir."});
+ box.append($("div",{class:"tag"},"Estación 1"),$("h2",{},q.t),$("div",{class:"prog"},"Pregunta "+(S.q+1)+" de "+QS.length),ta);
+ const next=()=>{const v=ta.value.trim();if(v)S.ans[q.k].push(v);if(S.q<QS.length-1){S.q++}else{S.step=1}render()};
+ box.append($("div",{class:"row"},$("button",{onclick:next},S.q<QS.length-1?"Siguiente parada":"Llegar a la estación 2")));
+ return box;
+}
+function station2(){
+ const box=$("div",{class:"card"});
+ if(S.c>=CARDS.length){S.step=2;return station3()}
+ const c=CARDS[S.c];
+ const pick=o=>{S.picks.push({k:o[1],txt:o[0]});S.c++;render()};
+ const opts=$("div",{class:"row",style:"flex-direction:column"});
+ c.o.forEach(o=>opts.append($("button",{class:"opt",style:"text-align:left;border-radius:14px",onclick:()=>pick(o)},o[0])));
+ box.append($("div",{class:"tag"},"Estación 2"),$("div",{class:"prog"},"Situación "+(S.c+1)+" de "+CARDS.length),
+  $("p",{class:"situ"},"“"+c.t+"”"),$("h2",{},"¿Qué harías espontáneamente?"),opts,
+  $("p",{class:"note"},"No hay respuesta correcta. Elegí la que harías sin pensarlo mucho."));
+ return box;
+}
+function caps(){
+ const n={};S.picks.forEach(p=>n[p.k]=(n[p.k]||0)+1);
+ return Object.keys(n).sort((a,b)=>n[b]-n[a]).map(k=>({n:SK[k],c:n[k],l:n[k]>=3?"Muy presente":n[k]==2?"Presente":"Se asoma"}));
+}
+function lv(list){
+ const d=$("div");
+ list.forEach(x=>d.append($("div",{class:"lv"},$("span",{},x.n),$("span",{class:"pts"},"●".repeat(Math.min(x.c,4))+"○".repeat(Math.max(0,3-x.c))+"  "+x.l))));
+ if(!list.length)d.append($("span",{class:"note"},"Todavía sin pistas acá."));
+ return d;
+}
+function chips(list,cls){const d=$("div",{class:"chips"});list.forEach(x=>d.append($("span",{class:"chip "+cls},x)));if(!list.length)d.append($("span",{class:"note"},"Todavía sin pistas acá."));return d}
+function buildPrompt(){
+ const c=caps(),L=a=>a.length?a.map(x=>"• "+x).join("\n"):"(sin respuesta)";
+ return "Quiero que actúes como compañero de exploración para mi transición laboral. Tengo más de 50 años y estoy pensando mi próxima etapa profesional. No me digas quién soy ni qué profesión me corresponde: cruzá mis pistas, proponé escenarios y señalá contradicciones. Considerá mi experiencia como un capital, nunca mi edad como un déficit. Hablame en español rioplatense, con calidez, sin usar guiones ni rayas.\n\nMIS PISTAS\n\nSaberes (lo que me consultan y lo que resuelvo casi sin darme cuenta):\n"+L(S.ans.saberes)+"\n\nEnergías (lo que quiero conservar):\n"+L(S.ans.energias)+"\n\nLo que ya no quiero seguir haciendo:\n"+L(S.ans.basta)+"\n\nHabilidades que aparecieron en mis decisiones espontáneas:\n"+L(c.map(x=>x.n+" ("+x.l+")"))+"\n\nDecisiones que tomé en situaciones concretas:\n"+L(S.picks.map(p=>p.txt))+"\n\nQUÉ TE PIDO\n1. Proponé 3 territorios laborales para explorar, evitando el consultor genérico. Para cada uno: por qué conecta con mis pistas y un experimento de 20 minutos para probarlo.\n2. Señalá una contradicción o tensión entre mis pistas.\n3. Cerrá con una pregunta que me abra una posibilidad.\n4. Antes de sacar conclusiones, preguntame por mi situación económica y cuántas horas quiero trabajar.\n\nRecordá: vos proponés, yo decido.";
+}
+function station3(){
+ const box=$("div",{class:"card"}),c=caps();
+ box.append($("div",{class:"tag"},"Tu mapa de próxima etapa"),$("h2",{},"Estas son las pistas que aparecieron"),
+  $("h3",{},"Saberes"),chips(S.ans.saberes,"s"),
+  $("h3",{},"Energías"),chips(S.ans.energias,"s"),
+  $("h3",{},"Habilidades que aparecieron en tus decisiones"),lv(c),
+  $("h3",{},"No quiero más"),chips(S.ans.basta,"q"));
+ const out=$("div",{id:"out"});
+ if(S.ai)renderAI(out,S.ai);
+ const btn=$("button",{onclick:()=>askAI(btn,out)},S.ai?"Explorar otra vez":"Explorar con la IA acá mismo");
+ const hint=$("p",{class:"note"},"Este botón funciona si abrís la página desde Claude. Si estás en otro lugar, usá la opción de abajo.");
+ const ta=$("textarea",{readonly:"",style:"min-height:170px;font-size:.85rem"});ta.value=buildPrompt();
+ const cp=$("button",{class:"ghost",onclick:async()=>{try{await navigator.clipboard.writeText(ta.value)}catch(e){ta.select();document.execCommand("copy")}cp.textContent="Copiado"}},"Copiar prompt");
+ box.append($("h3",{},"Opción 1: explorar acá"),$("div",{class:"row"},btn),hint,out,
+  $("h3",{},"Opción 2: llevar tus pistas a otra IA"),
+  $("p",{class:"note"},"Copiá este texto y pegalo en el asistente de IA que uses, como Claude, ChatGPT o Gemini. Tené en cuenta que al pegarlo, tus respuestas viajan a ese servicio."),
+  ta,$("div",{class:"row"},cp),
+  $("div",{class:"row"},$("button",{class:"ghost",onclick:()=>location.reload()},"Empezar de nuevo")),
+  $("p",{class:"note"},"La IA propone. Vos decidís."));
+ try{if(window.claude)claude.use("sample").then(x=>{if(!x){btn.disabled=true;hint.textContent="Esta opción no está disponible fuera de Claude. Usá la opción 2."}}).catch(()=>{})}catch(e){}
+ return box;
+}
+function renderAI(out,d){
+ out.innerHTML="";
+ out.append($("h3",{},"Territorios para explorar"));
+ (d.territorios||[]).forEach(t=>{
+  out.append($("div",{class:"terr"},$("b",{},t.nombre),$("div",{},t.porque),$("div",{class:"note"},"Probalo en 20 minutos: "+t.experimento)));
+ });
+ if(d.pregunta)out.append($("h3",{},"Una pregunta para pensar"),$("p",{class:"situ"},d.pregunta));
+}
+async function askAI(btn,out){
+ let sample=null;
+ try{sample=await claude.use("sample")}catch(e){}
+ if(!sample){out.innerHTML="";out.append($("p",{class:"note"},"La exploración con IA funciona cuando abrís esta página desde Claude."));return}
+ btn.disabled=true;btn.textContent="Pensando posibilidades...";
+ const c=caps();
+ const datos=JSON.stringify({saberes:S.ans.saberes,energias:S.ans.energias,habilidades:c.map(x=>x.n+" ("+x.l+")"),decisiones_espontaneas:S.picks.map(p=>p.txt),no_quiere_mas:S.ans.basta});
+ const prompt="Sos un compañero de exploración para una persona de más de 50 años que atraviesa una transición laboral. No la orientás ni le decís quién es: cruzás pistas, proponés escenarios y señalás contradicciones. Tratá la experiencia como un capital, nunca la edad como un déficit. Tono cálido, español rioplatense con voseo, sin usar guiones ni rayas. Pistas de la persona: "+datos+". Si hay pocas pistas, proponé igual pero decilo con humildad. Respondé SOLO JSON con esta forma: {\"territorios\":[{\"nombre\":\"\",\"porque\":\"una o dos frases que conecten con sus pistas\",\"experimento\":\"un desafío concreto de 20 minutos\"}],\"pregunta\":\"una pregunta que desafíe una contradicción o abra una posibilidad\"}. Exactamente 3 territorios, evitando el típico consultor genérico.";
+ try{
+  const r=await sample.json(prompt);
+  S.ai=r;renderAI(out,r);btn.textContent="Explorar otra vez";
+ }catch(e){
+  out.innerHTML="";out.append($("p",{class:"note"},"No pude explorar ahora. Probá de nuevo en un momento."));btn.textContent="Explorar posibilidades con la IA";
+ }
+ btn.disabled=false;
+}
+function render(){
+ track();const s=document.getElementById("stage");s.innerHTML="";
+ s.append(S.step===0?station1():S.step===1?station2():station3());
+ window.scrollTo(0,0);
+}
+render();
+</script>
+</body>
+</html>
