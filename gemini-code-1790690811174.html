@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Filosofía de la Educación — Recorrido III: Guion detallado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Paleta refinada para alto contraste y excelente legibilidad */
+    --navy: #081221; 
+    --navy2: #101f38; 
+    --yellow: #f59e0b; 
+    --yellow2: #fbbf24; 
+    --red: #ef4444; 
+    --red2: #f87171;
+    --cream: #0c182b; 
+    --ink: #f1f5f9; 
+    --sub: #94a3b8; 
+    --card: #15243b; 
+    --line: #213554;
+    --maxw: 880px;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Work Sans", -apple-system, Segoe UI, Roboto, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: calc(76px + env(safe-area-inset-top, 0px)); }
+  body {
+    margin: 0; 
+    background: var(--cream); 
+    color: var(--ink);
+    font-family: var(--serif);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    line-height: 1.6;
+  }
+
+  header.hero {
+    background: radial-gradient(120% 140% at 10% 0%, #162c4e, var(--navy) 65%, #2a121d 160%);
+    color: #fff; 
+    padding: 56px 24px 40px; 
+    position: relative; 
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  header.hero::after {
+    content: ""; 
+    position: absolute; 
+    right: -60px; 
+    top: -60px; 
+    width: 260px; 
+    height: 260px;
+    background: radial-gradient(circle, var(--yellow) 0%, transparent 70%); 
+    opacity: .2; 
+    pointer-events: none;
+  }
+  header.hero .inner { max-width: var(--maxw); margin: 0 auto; }
+  header.hero .eyebrow { 
+    color: var(--yellow2); 
+    font-family: var(--sans); 
+    font-weight: 700; 
+    letter-spacing: .08em; 
+    text-transform: uppercase; 
+    font-size: 13px; 
+    margin-bottom: 10px;
+  }
+  header.hero h1 { font-size: clamp(28px, 4vw, 42px); margin: 0 0 10px; line-height: 1.15; color: #ffffff; }
+  header.hero p.sub { color: #cbd5e1; font-family: var(--sans); font-size: 16px; margin: 0 0 4px; }
+  header.hero p.authors { color: var(--yellow2); font-family: var(--sans); font-weight: 600; margin-top: 18px; }
+
+  nav.toc {
+    max-width: var(--maxw); 
+    margin: -20px auto 0; 
+    background: var(--card);
+    border: 1px solid var(--line); 
+    border-radius: 14px; 
+    padding: 18px 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.4); 
+    position: relative; 
+    z-index: 2;
+    font-family: var(--sans); 
+    font-size: 14px;
+  }
+  nav.toc strong { display: block; margin-bottom: 8px; color: var(--sub); text-transform: uppercase; font-size: 11px; letter-spacing: .06em; }
+  nav.toc a { color: var(--yellow2); text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; font-weight: 500; }
+  nav.toc a:hover { text-decoration: underline; color: #ffffff; }
+
+  main { max-width: var(--maxw); margin: 0 auto; padding: 40px 24px 80px; }
+  .lede { 
+    font-family: var(--sans); 
+    color: #cbd5e1; 
+    font-size: 15px; 
+    background: var(--card); 
+    border-left: 4px solid var(--yellow); 
+    padding: 16px 18px; 
+    border-radius: 8px; 
+    margin-bottom: 36px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  }
+  section.block { margin-bottom: 52px; }
+  h2.block-title {
+    font-family: var(--sans); 
+    font-size: 13px; 
+    font-weight: 700;
+    letter-spacing: .08em; 
+    text-transform: uppercase; 
+    color: var(--yellow2); 
+    margin: 0 0 4px;
+  }
+  h2.block-sub { font-size: 26px; margin: 0 0 22px; color: #ffffff; }
+
+  .bridge {
+    font-family: var(--sans); 
+    font-style: italic; 
+    color: #cbd5e1;
+    background: transparent; 
+    border-left: 3px dashed var(--sub); 
+    padding: 8px 16px; 
+    margin: 18px 0 30px; 
+    font-size: 14px;
+  }
+  .card {
+    background: var(--card); 
+    border: 1px solid var(--line); 
+    border-radius: 14px;
+    padding: 22px 24px; 
+    margin-bottom: 18px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  }
+  .card h3 { margin: 0 0 6px; font-size: 20px; color: #ffffff; }
+  .card .slidenum { font-family: var(--mono); font-size: 11px; color: var(--red2); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .card .onslide {
+    font-family: var(--sans); 
+    font-size: 13px; 
+    color: #f1f5f9;
+    background: rgba(245, 158, 11, 0.15); 
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 6px; 
+    padding: 8px 12px; 
+    margin: 10px 0 12px; 
+    display: block;
+  }
+  .card p { margin: 8px 0 0; font-size: 16px; color: #e2e8f0; }
+  .card .q { font-weight: 700; color: var(--yellow2); }
+  
+  .pending { border-style: dashed; border-color: var(--red2); opacity: .95; background: rgba(239, 68, 68, 0.05); }
+  .pending .slidenum { color: var(--red2); }
+
+  table.biblio { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 14px; }
+  table.biblio th, table.biblio td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.biblio th { color: var(--sub); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  table.biblio a { color: var(--yellow2); }
+  .tag { display: inline-block; font-family: var(--sans); font-size: 11px; background: var(--yellow); color: #000; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-bottom: 6px; }
+  
+  footer { text-align: center; color: var(--sub); font-family: var(--sans); font-size: 13px; padding: 30px 24px 50px; }
+  @media (max-width:600px) { header.hero { padding: 40px 16px 30px; } main { padding: 28px 16px 60px; } .card { padding: 18px; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="eyebrow">Filosofía de la Educación · Recorrido III</div>
+    <h1>Conocimiento, vínculo y finitud en la era digital</h1>
+    <p class="sub">Guion detallado, slide por slide, para compartir y revisar juntas antes de la clase.</p>
+    <p class="authors">Dra. Patricia Velaz · Mag. Eleonora Segura</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <strong>Ir a</strong>
+  <a href="#apertura">Apertura</a>
+  <a href="#seccion1">Sección 1 · Conocimiento</a>
+  <a href="#seccion2">Sección 2 · Vínculo</a>
+  <a href="#cierre">Cierre</a>
+</nav>
+
+<main>
+  <p class="lede">Este documento recorre el guion completo de la clase, slide por slide, con el texto que va en pantalla y lo que se dice en voz alta. Está pensado para revisarlo juntas antes de pasar los cambios al PPT. Quedan marcadas en gris las dos decisiones que todavía tenemos abiertas.</p>
+
+  <section class="block" id="apertura">
+    <h2 class="block-title">Apertura</h2>
+    <h2 class="block-sub">La pregunta que va a acompañar toda la clase</h2>
+
+    <div class="card">
+      <span class="slidenum">Slide 1</span>
+      <h3>¿Qué significa aprender?</h3>
+      <span class="onslide">En pantalla: solo la pregunta, sin más texto.</span>
+      <p>No la contestamos todavía. La dejamos en el aire, en silencio, dos o tres segundos. Es la pregunta que va a acompañar toda la clase y que recién vamos a poder responder mejor al final, cuando ya hayamos recorrido conocimiento, vínculo y finitud.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 2</span>
+      <h3>Persona, Internet, IA</h3>
+      <span class="onslide">En pantalla: "Puedo preguntarle algo a una persona, buscarlo en Internet o preguntárselo a una IA. Entonces, ¿qué significa aprender?"</span>
+      <p>Hoy tenemos tres caminos disponibles para resolver cualquier duda, y los tres funcionan razonablemente bien. Entonces la pregunta deja de ser "dónde busco" y pasa a ser otra cosa que todavía no sabemos nombrar del todo. Abrimos a comentarios cortos, sin resolver nada, solo para recoger las primeras intuiciones del grupo.</p>
+    </div>
+  </section>
+
+  <section class="block" id="seccion1">
+    <h2 class="block-title">Sección 1</h2>
+    <h2 class="block-sub">Conocimiento: dónde está y qué es lo mío</h2>
+
+    <div class="card">
+      <span class="slidenum">Slide 3</span>
+      <h3>¿Dónde está el conocimiento?</h3>
+      <span class="onslide">En pantalla: solo la pregunta.</span>
+      <p>Vamos a intentar responder esto antes de volver a la pregunta de aprender que quedó abierta.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 4</span>
+      <h3>Conocimiento distribuido</h3>
+      <span class="onslide">En pantalla: imagen del cerebro conectado a redes, libros, personas, IA. "El conocimiento no está necesariamente en el sujeto."</span>
+      <p>El conocimiento nunca vivió adentro de una sola cabeza. Siempre estuvo conectado a libros, a otras personas, a herramientas, y hoy además a redes y a inteligencia artificial. No es una pérdida ni una novedad alarmante, es cómo funcionó siempre el conocimiento humano, solo que ahora esa conexión es mucho más visible y mucho más rápida.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 5</span>
+      <h3>Sobreabundancia informacional</h3>
+      <span class="onslide">En pantalla: imagen con el caos de información a la izquierda y la selección ordenada a la derecha. Título sugerido: "De la disponibilidad al criterio".</span>
+      <p>Si el conocimiento siempre estuvo afuera, lo que cambió hoy es la cantidad. Señalamos la imagen: todo lo que aparece desordenado a la izquierda es lo que tenemos disponible hoy; lo que aparece ordenado a la derecha es lo que hace falta para que eso se vuelva algo útil y no solo ruido.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 6</span>
+      <h3>Pensamiento crítico: interrumpir el flujo digital</h3>
+      <span class="onslide">En pantalla: "Pensamiento crítico. Interrumpir el flujo digital."</span>
+      <p>Byung-Chul Han dice que todo lo digital está construido para que nunca nos detengamos: siempre hay un contenido más, una respuesta más. Lo llama <em>positividad</em>, un sistema donde nunca hace falta decir que no. Dos ideas más de Han ayudan a aterrizarlo: la del <em>enjambre digital</em> frente a la masa clásica (la masa antigua tenía un "nosotros" capaz de dirigirse hacia algo en conjunto; el enjambre digital son individuos aislados haciendo ruido, sin voz colectiva, y sin silencio no hay reflexión posible), y la diferencia entre atención profunda e hiperatención (saltar constantemente de estímulo en estímulo es incompatible con un pensamiento que necesita demorarse en algo). Pensar críticamente, entonces, no es la habilidad técnica de detectar una fuente falsa: es recuperar la capacidad de demorarse en algo el tiempo suficiente para que se vuelva pensamiento propio.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 7</span>
+      <h3>Curaduría: cierre de esta sección</h3>
+      <span class="onslide">En pantalla (a redactar): "Curar es elegir qué entra en mi historia."</span>
+      <p>Esa pausa que logramos frente al flujo es lo que permite elegir qué dejamos entrar en nuestra propia historia y qué dejamos afuera. Curar no es una tarea técnica de filtrado de información, es un acto de configuración narrativa: lo que elijo atender es, literalmente, lo que voy a ser. Cerramos esta sección con la pregunta que queda picando: si el conocimiento puede estar afuera de mí, ¿también puede estar afuera el criterio con el que elijo, o ahí soy insustituible?</p>
+    </div>
+
+    <p class="bridge">Frase puente antes de girar de sección: "Hasta acá vimos qué pasa con el conocimiento. Ahora miremos qué le pasa al vínculo entre las personas que aprenden y enseñan."</p>
+  </section>
+
+  <section class="block" id="seccion2">
+    <h2 class="block-title">Sección 2</h2>
+    <h2 class="block-sub">Vínculo: qué le pasa al encuentro educativo</h2>
+
+    <div class="card">
+      <span class="slidenum">Slide 8</span>
+      <h3>Vínculos, huella y legado</h3>
+      <span class="onslide">En pantalla: título divisor.</span>
+      <p>Anuncio breve del cambio de tema, casi sin explicar, solo dando el título de lo que viene.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 9</span>
+      <h3>Vínculos: de la presencia al intercambio mediatizado</h3>
+      <span class="onslide">En pantalla: imagen de personas juntas mirando cada una su teléfono.</span>
+      <p>Antes un vínculo necesitaba que dos personas estuvieran en el mismo lugar al mismo tiempo. Hoy la mayoría de nuestros vínculos pasan por una pantalla, y eso cambia algo del vínculo, aunque todavía no sepamos bien qué.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 10</span>
+      <h3>Vínculos digitales: Her y Replika</h3>
+      <span class="onslide">En pantalla: afiche de "Her" y captura de la app Replika.</span>
+      <p>Dos ejemplos, uno de ficción y uno real, de vínculos que ya no son con otra persona sino con un sistema entrenado para responder como si lo fuera. Preguntamos al grupo si eso es un vínculo o es otra cosa que se le parece.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 11</span>
+      <h3>¿Vínculos educativos? Bancario versus encuentro que incomoda</h3>
+      <span class="onslide">En pantalla: las dos imágenes contrastadas, "Bancario 2.0" (la alcancía robot) y "Encuentro que incomoda" (docente y estudiante en diálogo).</span>
+      <p>Freire llama <em>concepción bancaria de la educación</em> a aquella donde el docente deposita contenidos en el estudiante como quien deposita dinero en una cuenta: el estudiante es un recipiente pasivo, receptor, archivador. Es una educación que no dialoga ni pregunta, porque el conflicto es ruido en el sistema de depósito. Una IA usada como tutor puede reproducir exactamente esa lógica, incluso perfeccionada: deposita contenido más rápido, más disponible, más personalizado, pero sigue siendo depósito. Frente a eso, <strong>Carlos Skliar</strong> y <strong>Jorge Larrosa</strong> (que escribieron juntos <em>Experiencia y alteridad en educación</em>, 2009) piensan el encuentro educativo real como algo con fricción. Larrosa dice que la experiencia es lo que nos pasa, no lo que simplemente sucede o lo que sabemos, y que para que algo nos pase hace falta pararse, dejarse afectar, exponerse. Skliar agrega la alteridad: el otro en la educación no está para confirmarme lo que ya sé, está para interrumpirme, para plantearme una pregunta que yo no me hubiera hecho solo. Esa incomodidad conecta con Han: es la misma interrupción del flujo que vimos antes, solo que ahora no la genero yo frente a la información, la genera el otro, frente a mí. Pregunta que dejamos picando: ¿puede un chatbot sostener este segundo tipo de vínculo, o solo el primero?</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 12</span>
+      <h3>Huella digital, huellas educativas: registro versus marca</h3>
+      <span class="onslide">En pantalla: "Huella digital. Huellas educativas."</span>
+      <p>Levinas distingue entre la huella como <em>registro</em> y la huella como <em>marca</em>. Un registro es un dato: algo que quedó guardado y se puede recuperar siempre igual. Una marca, en el sentido que Levinas le da al rostro del otro, es algo que no se agota en lo que queda visible: el otro deja una traza que excede cualquier representación de él, no se lo puede reducir a lo que se guardó. Una clase grabada es un registro. Lo que esa clase produjo en quien la vivió, cómo le cambió una pregunta, cómo le movió una certeza, eso es la marca, y esa marca no queda en ningún archivo.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 13</span>
+      <h3>Inmortalidad digital: chatbots post mortem, grief tech</h3>
+      <span class="onslide">En pantalla: fotograma de "Be Right Back" (Black Mirror).</span>
+      <p>Contamos el fenómeno: chatbots entrenados con la voz y los textos de alguien que murió, pensados para seguir "hablando" con esa persona. Todavía no lo resolvemos con el vocabulario de finitud, solo dejamos la pregunta incómoda, sin cerrar: si algo de una persona sigue disponible y respondiendo para siempre, ¿qué le pasa a la idea de que esa persona ya no está?</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 14</span>
+      <h3>Pregunta de cierre de la sección</h3>
+      <span class="onslide">En pantalla: "¿Cuándo termina un vínculo educativo si siempre está disponible ese contenido?"</span>
+      <p>Juntamos Freire, Skliar y Larrosa, Levinas, e inmortalidad digital en una sola pregunta para el debate: si el contenido de un profesor queda disponible para siempre, entrenado en un chatbot, ¿el vínculo educativo terminó alguna vez, o solo cambió de forma? ¿Lo que queda guardado es el vínculo, la marca, o solo la prueba de que hubo un vínculo, el registro? Es la pregunta más fuerte de todo el bloque, y se abre a debate con tiempo real.</p>
+    </div>
+  </section>
+
+  <section class="block" id="cierre">
+    <h2 class="block-title">Cierre</h2>
+    <h2 class="block-sub">De las dos preguntas a una sola</h2>
+
+    <div class="card">
+      <span class="slidenum">Slide 15</span>
+      <h3>Pregunta madre</h3>
+      <span class="onslide">En pantalla: "Si hoy casi cualquier conocimiento está disponible con solo preguntar, a una persona, a Internet, a una IA, ¿cuál es mi conocimiento?"</span>
+      <p>Ahora sí la formulamos completa, uniendo las dos secciones: todo lo visto, conocimiento distribuido y criterio insustituible por un lado, vínculo y marca que excede el registro por otro, desemboca en esta pregunta. La dejamos abierta unos segundos antes de seguir.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 16</span>
+      <h3>Entonces, ¿qué significa educar?</h3>
+      <span class="onslide">En pantalla: la pregunta.</span>
+      <p>Aprender es intransitivo, le pasa a un sujeto incluso solo: es apropiación, hacer propio algo. Educar es transitivo, siempre se educa a alguien: es intención dirigida a otro, viene de <em>educere</em>, conducir hacia afuera, llevar más allá de donde se estaba. Toda la clase vino preguntando qué le pasa a quien aprende; ahora el giro es preguntar qué tarea le queda a quien tiene la intención de educar en este contexto.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 17</span>
+      <h3>¿Qué significa aprender cuando cambian las condiciones en las que aprendemos?</h3>
+      <span class="onslide">En pantalla: la pregunta, reformulada.</span>
+      <p>Volvemos a la pregunta de apertura, pero ya no en el vacío: ahora está atravesada por todo el recorrido. La reformulamos para mostrar que cambió de peso, sin contestarla del todo todavía.</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Slide 18</span>
+      <h3>Fin de la educación: trascendencia y finitud</h3>
+      <span class="onslide">En pantalla: el cuadro ya armado, Trascendencia / Finitud.</span>
+      <p>Nombramos con vocabulario filosófico lo que vinieron sintiendo sin nombre durante toda la clase. La <strong>finitud</strong> es lo que estaba en juego en la inmortalidad digital que dejamos sin cerrar antes: ahora la cerramos, la inmortalidad digital amenaza justamente la finitud que hace posible que un vínculo educativo termine, y que por eso mismo tenga sentido. La finitud es también la condición de quien aprende: aprende desde sus límites, su tiempo, su historia. La <strong>trascendencia</strong> es lo que estaba en juego en la pregunta madre y en el criterio insustituible: trascender no es que algo mío quede guardado en un servidor, es que algo mío siga vivo en otro, transformado. Y la trascendencia es la apuesta de quien educa: llevar a alguien más allá de donde estaba.</p>
+    </div>
+
+    <div class="card pending">
+      <span class="slidenum">Pendiente de decidir</span>
+      <h3>"Nuevos significados de la integralidad en la era digital"</h3>
+      <p>Esta diapositiva todavía no encontró un lugar claro en el nuevo hilo: no retoma ningún concepto trabajado antes. Dos caminos: sacarla del deck, o reformularla como puente directo hacia la actividad final (por ejemplo: "¿qué es integral en un aprendizaje que ya no depende solo de mí?").</p>
+    </div>
+
+    <div class="card">
+      <span class="slidenum">Cierre práctico</span>
+      <h3>Actividad, encuesta</h3>
+      <p>Se mantiene tal como está: <a href="https://forms.gle/HAR66KJNoh562dHDA">forms.gle/HAR66KJNoh562dHDA</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>Documento de trabajo compartido — Filosofía de la Educación, Recorrido III.</footer>
+
+</body>
+</html>
