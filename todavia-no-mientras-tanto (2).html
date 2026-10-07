@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Todavía no (Mientras Tanto)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&display=swap" rel="stylesheet">
+<style>
+@property --fog{syntax:"<number>";inherits:true;initial-value:.92}
+:root{
+ --page:#e8edf0;--paper:#fbfcfc;--ink:#1c2a37;--mut:#52606d;--line:#cfd8de;
+ --slate:#2e4256;--lantern:#c9811c;--glow:#f6e3bf;--wash:#eef3f6;
+ --sky1:#cde2ec;--sky2:#f8e9c6;--fogc:#33475a;--far:#a8bec9;--mid:#86a1af;--near:#658293;--fog:.92;
+ --serif:"Literata",Georgia,"Times New Roman",serif;--sans:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#10171e;--paper:#19232d;--ink:#e8eef2;--mut:#a3b1bd;--line:#2f3d4a;--slate:#9fc0d6;--glow:#4a3a1c;--wash:#1f2c38;--sky1:#22364a;--sky2:#6b5d46;--fogc:#0a1017;--far:#2c4356;--mid:#243849;--near:#1b2d3b}}
+:root[data-theme="dark"]{--page:#10171e;--paper:#19232d;--ink:#e8eef2;--mut:#a3b1bd;--line:#2f3d4a;--slate:#9fc0d6;--glow:#4a3a1c;--wash:#1f2c38;--sky1:#22364a;--sky2:#6b5d46;--fogc:#0a1017;--far:#2c4356;--mid:#243849;--near:#1b2d3b}
+html{scroll-padding-top:env(safe-area-inset-top,0px);transition:--fog 1.6s ease}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:19px/1.6 var(--sans)}
+main{max-width:720px;margin:0 auto;padding:26px 16px 56px}
+header{padding:0 4px 18px}
+h1{font:500 2.7rem/1.05 var(--serif);letter-spacing:-.015em;margin:0;color:var(--ink)}
+.sub{color:var(--mut);margin:.5em 0 0;font-size:1rem}
+.hero{position:relative;border-radius:22px 22px 0 0;overflow:hidden;background:linear-gradient(var(--sky1),var(--sky2));aspect-ratio:700/230}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(var(--fogc),color-mix(in srgb,var(--fogc) 55%,transparent));opacity:calc(var(--fog) * .72);pointer-events:none}
+.hero svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.fogbands{opacity:var(--fog)}
+.sheet{position:relative;background:var(--paper);border-radius:26px 26px 8px 8px;margin-top:-26px;padding:26px 22px 24px;box-shadow:0 -10px 28px rgba(18,32,46,.14);z-index:1}
+.tag{font-size:.95rem;color:var(--mut);margin:0}
+h2{font:600 1.75rem/1.2 var(--serif);margin:.15em 0 .35em;color:var(--ink)}
+.guia{font:italic 400 1.05rem/1.65 var(--serif);color:var(--mut);margin:.3em 0 14px;max-width:62ch}
+.cartel{font:500 1.55rem/1.35 var(--serif);color:var(--ink);margin:.2em 0 .5em;padding-left:16px;border-left:4px solid var(--lantern);max-width:30ch}
+.situ{font:italic 500 1.2rem/1.5 var(--serif);margin:.4em 0 .6em;max-width:60ch}
+h3{font:700 1.02rem/1.35 var(--sans);color:var(--ink);margin:24px 0 6px}
+.f{margin:12px 0}.f label{display:block;font-size:.98rem;color:var(--mut);margin-bottom:5px;max-width:64ch}
+textarea,input{width:100%;padding:12px 13px;font:inherit;font-size:1.02rem;color:var(--ink);background:var(--wash);border:1.5px solid var(--line);border-radius:8px}
+textarea{min-height:88px;resize:vertical}
+textarea:focus,input:focus,button:focus-visible,summary:focus-visible{outline:3px solid var(--lantern);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+button{font:700 1rem var(--sans);min-height:46px;padding:10px 22px;border-radius:999px;border:2px solid var(--slate);background:var(--slate);color:var(--paper);cursor:pointer}
+button:hover{filter:brightness(1.12)}
+button.ghost{background:transparent;color:var(--slate)}
+button.opt{width:100%;text-align:left;border-radius:10px;background:var(--wash);color:var(--ink);border:1.5px solid var(--line);font-weight:400;padding:12px 16px;line-height:1.45}
+button.opt.sel{border-color:var(--lantern);box-shadow:inset 5px 0 0 var(--lantern);background:var(--glow);font-weight:700}
+.stack{display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+button.chip,span.chip{font:400 .95rem var(--sans);min-height:40px;padding:7px 14px;border-radius:7px;background:var(--wash);color:var(--ink);border:1.5px solid var(--line)}
+button.chip.sel{border-color:var(--lantern);background:var(--glow);font-weight:700}
+span.chip{min-height:0;background:var(--glow);border-color:transparent}
+.huella{background:var(--glow);border-left:4px dashed var(--lantern);border-radius:4px 14px 14px 4px;padding:16px 16px 14px;margin-top:26px}
+.huella b{display:block;font:700 1.02rem var(--sans)}
+.huella b::before{content:"";display:inline-block;width:20px;height:20px;margin-right:9px;vertical-align:-4px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cellipse cx='6' cy='7' rx='3' ry='5' fill='%23c9811c' transform='rotate(-12 6 7)'/%3E%3Cellipse cx='14' cy='13' rx='3' ry='5' fill='%23c9811c' transform='rotate(12 14 13)'/%3E%3C/svg%3E") center/contain no-repeat}
+.row+.note{margin-top:16px}
+.note{font-size:.92rem;color:var(--mut);margin:6px 0}
+details.otros{margin-top:18px;font-size:.98rem}
+details.otros summary{cursor:pointer;color:var(--slate);font-weight:700;padding:6px 0}
+.ot{font:italic 400 1.02rem/1.55 var(--serif);margin:.6em 0;padding-left:14px;border-left:3px solid var(--line)}
+.tarjeta{background:var(--glow);border:2px dashed var(--lantern);border-radius:6px;padding:20px 20px 8px;margin-top:16px}
+.tarjeta .k{display:block;font:700 .95rem var(--sans);color:var(--slate)}
+.tarjeta p{margin:.2em 0 1em;white-space:pre-wrap;font-family:var(--serif)}
+@media (max-width:520px){h1{font-size:2.15rem}.sheet{padding:22px 16px 20px}.hero{aspect-ratio:400/230}}
+@media (prefers-reduced-motion:reduce){html{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Todavía no</h1>
+<p class="sub">Un recorrido por el Mientras Tanto. Unos 15 a 20 minutos.</p>
+</header>
+<div class="hero" id="path" role="img" aria-label="Recorrido"></div>
+<div id="stage" class="sheet"></div>
+</main>
+<script>
+const $=(t,a={},...k)=>{const e=document.createElement(t);for(const x in a){x==="class"?e.className=a[x]:x==="onclick"?e.onclick=a[x]:e.setAttribute(x,a[x])}k.forEach(c=>e.append(c));return e};
+const S={i:0,v:{},m:{}};
+const V=k=>S.v[k]||"";
+const L=a=>a&&a.length?a.join(", "):"(sin marcar)";
+const NAMES=["Perderse","Hacer lugar","Preguntar","Explorar","Elegir y marcha"],STOP=[-1,0,1,2,3,3,4,4,5];
+const FR=["Tengo que conseguir un trabajo estable.","A esta edad ya debería saber qué quiero.","Si empiezo algo, tengo que terminarlo.","No soy bueno o buena para eso.","Eso no es para mí.","Ya es demasiado tarde.","Los demás esperan que yo..."];
+const HER=["¿Qué debería estar haciendo a esta edad?","¿Cómo sé que estoy tomando la decisión correcta?","¿Y si me equivoco?","¿Qué esperan los demás de mí?","Ninguna me pertenece del todo."];
+const CAP=["Escucho bien.","Encuentro alternativas cuando algo no funciona.","Aprendo rápido cuando algo me interesa.","Me gusta explicarles cosas a otros.","Tengo facilidad para organizar.","Hago buenas preguntas.","Veo cosas que otros no ven.","Cuando algo me importa, insisto.","Me adapto cuando cambian las circunstancias.","Me gusta mejorar cosas que ya existen.","Conecto personas o ideas.","Hay cosas que otros reconocen en mí y yo no valoro."];
+const EMO=["Miedo","Inseguridad","Falta de información","Falta de experiencia","Desinterés","Deseo","Entusiasmo","Curiosidad"];
+const OTROS=[
+ ["Encontré que hace mucho no miro sin buscar nada.","Me pasó que no supe qué hacer y no pasó nada malo.","Me quedó una palabra: tal vez."],
+ ["Hasta ahora creía que a mi edad era tarde. Ahora me pregunto quién lo dijo primero.","Esa voz era la de mi padre, no la mía.","Dejé entreabierta la idea de que tengo que terminar todo lo que empiezo."],
+ ["¿Qué quiero hacer con el tiempo de trabajo que me queda?","Pasé de “¿cómo no equivocarme?” a “¿qué necesito saber para dar un primer paso?”","¿Qué parte de lo que sé le puede servir a alguien más?"],
+ ["Salí a encontrar y descubrí que explicar me entusiasma más de lo que creía.","No encontré lo que esperaba, pero descubrí que no quiero volver a vender.","Hablé con alguien que hace algo parecido y me dio curiosidad."],
+ ["Hoy me animo a llamar a una persona que hace lo que me intriga.","Elegí probar un mes sin dejar lo que tengo.","Todavía no sé dónde voy a llegar. Pero ya estoy en marcha."]
+];
+function field(label,key,ph,min){const w=$("div",{class:"f"});if(label)w.append($("label",{},label));const t=$("textarea",{placeholder:ph||""});if(min)t.style.minHeight=min;t.value=V(key);t.oninput=()=>S.v[key]=t.value;w.append(t);return w}
+function line(label,key,ph){const w=$("div",{class:"f"});w.append($("label",{},label));const t=$("input",{type:"text",placeholder:ph||""});t.value=V(key);t.oninput=()=>S.v[key]=t.value;w.append(t);return w}
+function pick(list,key){const w=$("div",{class:"stack"});list.forEach(t=>w.append($("button",{class:"opt"+(V(key)===t?" sel":""),onclick:()=>{S.v[key]=t;[...w.children].forEach(x=>x.className="opt"+(x.textContent===t?" sel":""))}},t)));return w}
+function multi(list,key){S.m[key]=S.m[key]||[];const w=$("div",{class:"chips"});list.forEach(t=>{const b=$("button",{class:"chip"+(S.m[key].includes(t)?" sel":""),onclick:()=>{const a=S.m[key],i=a.indexOf(t);i<0?a.push(t):a.splice(i,1);b.classList.toggle("sel")}},t);w.append(b)});return w}
+function huella(key,ph,t){return $("div",{class:"huella"},$("b",{},t||"Tu huella de esta parada"),$("p",{class:"note"},"Una frase, una palabra o algo que te quedó. No hace falta explicar todo."),field("",key,ph,"60px"))}
+function otros(n){return $("details",{class:"otros"},$("summary",{},"Ver huellas de ejemplo de otros recorridos"),...OTROS[n].map(t=>$("p",{class:"ot"},"“"+t+"”")),$("p",{class:"note"},"No hay mejor huella ni comparación. No se trata de coincidir."))}
+function screen(tag,title,guia,kids,back,next,label){
+ const c=$("div",{class:"pane"});c.append($("div",{class:"tag"},tag),$("h2",{},title));if(guia)c.append($("p",{class:"guia"},guia));kids.forEach(k=>c.append(k));
+ c.append($("div",{class:"row"},next?$("button",{onclick:next},label||"Seguir"):"",back?$("button",{class:"ghost",onclick:back},"Volver"):""));return c}
+const go=n=>{S.i=n;render()};
+function armarPrompt(){
+ const g=k=>V(k)||"(sin responder)";
+ return `Quiero que actúes como mi guía de viaje, no como un oráculo ni como un terapeuta. Estoy en un recorrido de exploración personal llamado "Todavía no". Todavía no sé qué quiero y no tengo que saberlo. No me digas qué hacer ni quién soy: preguntame, escuchame, devolveme lo que digo, conectá cosas y proponeme posibilidades. Hablame en español rioplatense, con calidez, sin usar guiones ni rayas.
+
+LO QUE LLEVO EN MI EQUIPAJE
+Lo que me trajo hasta acá: ${g("motivo")}
+Una certeza que dejé entreabierta: ${g("h2")}
+La pregunta que me acompaña: ${g("h3")}
+Capacidades con las que cuento: ${L(S.m.caps)}
+Algo que hago naturalmente: ${g("natural")}
+Emociones que aparecen frente a una posibilidad: ${L(S.m.emos)}
+Lo que siento que llevo conmigo ahora: ${g("equi")}
+
+CÓMO QUIERO EL RECORRIDO
+Quiero hacerlo por partes. Primero dame solo 3 puertas posibles para explorar, bien distintas entre sí y coherentes con mi pregunta y mis capacidades. Para cada una incluí una frase que la explique, la trampa o riesgo que podría tener y un experimento de 20 minutos para probarla sin comprometerme. No elijas por mí. Después esperá a que yo escriba "siguiente".
+
+PARA SEGUIR EXPLORANDO
+1. Con mi "siguiente", explicame en pocas frases por qué ahora vamos a indagar por contraste: vamos a mirar una de esas puertas desde mundos muy lejanos para pensarla distinto. Decime que me divierta con esta búsqueda, porque van a aparecer cosas dispares, pero también algo interesante, a veces genial, que espeja lo que me puede interesar. Preguntame cuál de las 3 puertas me llama más. Yo elijo una y no sigas hasta que elija.
+2. Proponeme 3 escenarios de contraste, bien lejos del tema y bien distintos entre sí, de mundos muy diferentes (por ejemplo ficción, naturaleza, oficios, deporte, arte, historia, el espacio). Cambialos cada vez: no uses siempre los mismos ni repitas ninguno anterior. Una línea para cada uno, para que yo elija por número.
+3. Cuando yo elija un contraste, explorá ese mundo sin relacionarlo todavía con mi puerta: listá entre 6 y 8 elementos (estructuras, dinámicas, conflictos, decisiones, transformaciones), cada uno en pocas palabras. Yo elijo 2 o 3 para llevar al cruce.
+4. Con los elementos que elegí, generá 2 o 3 cruces con la puerta que elegí. Un cruce no es una comparación ni una explicación de en qué se parecen: es una posibilidad nueva que nace de combinar ambos mundos. No busques similitudes obvias: cada cruce tiene que introducir una diferencia real en la manera habitual de pensar esa puerta, y tiene que poder soñarse como algo concreto. Formulalos como "¿Y si...?". En total no más de 80 palabras. Sin explicaciones largas ni consejos genéricos.
+5. Preguntame cuál de los cruces me mueve de lugar. Yo decido. Cuando elija, decime que podemos seguir con un nuevo escenario de contraste, o que puedo hacerte mis propias preguntas, y que cuando esté lista o listo te pida un "resumen" para volver al juego.
+Si escribo "nuevo escenario", ofrecé 3 contrastes nuevos sin repetir ninguno anterior. Si escribo "otra puerta", volvé al paso 1 con las otras. Si escribo "tensionar", decime qué supuesto pone en duda el cruce elegido y dónde podría fallar, en no más de 80 palabras.
+Cuando escriba "resumen", dame lo que fuimos encontrando en hasta 5 puntos de pocas palabras. Voy a llevarlos de vuelta y a separar lo que vos dijiste de lo que yo completé.`;
+}
+const STEPS=[
+ ()=>{const c=screen("Umbral","Bienvenido al Mientras Tanto","",[
+   $("p",{class:"cartel"},"Bienvenido al territorio de quienes compartimos un Todavía no."),
+   $("p",{class:"guia"},"Todavía no sé. Todavía no encontré. Todavía no decidí. Todavía no empecé. Quizás no tengas que resolverlo todavía."),
+   $("p",{class:"situ"},"¿Qué te trae hasta acá?"),
+   field("","motivo","Una situación, una pregunta, un deseo, una curiosidad. O “no sé”."),
+   $("p",{class:"note"},"Nada de lo que escribas se envía a ningún lado. Queda en esta pantalla y en el archivo que te lleves.")],null,()=>go(1),"Entrar");
+  c.lastChild.append($("button",{class:"ghost",onclick:()=>{S.v.motivo=V("motivo")||"No sé, quiero ver qué encuentro";go(1)}},"No sé, quiero ver qué encuentro"));return c},
+ ()=>screen("Parada 1","Perderse","No vamos a buscar una respuesta. Vamos a perdernos un poco.",[
+   $("h3",{},"¿Qué ves?"),$("p",{class:"situ"},"Una persona está parada frente a una puerta, con la mano en el picaporte."),
+   field("¿Qué ves?","ve"),field("¿Eso es lo único que podría estar pasando? Escribí otra posibilidad.","ve2"),
+   $("p",{class:"note"},"¿Qué cambió: la situación o tu manera de mirarla?"),
+   $("h3",{},"Jugar con el no sé"),line("No sé qué quiero...","n1"),line("No necesito saberlo ahora porque...","n2"),line("No saber puede ser el comienzo de...","n3"),
+   huella("h1","Encontré... Me pasó... Me quedó..."),otros(0)],()=>go(0),()=>go(2)),
+ ()=>screen("Parada 2","Hacer lugar","A veces no necesitamos tirar nada. Sólo abrir una ventana.",[
+   $("h3",{},"¿Cuál de estas frases te suena más?"),pick(FR,"cert"),
+   line("¿De quién parece ser esa voz?","voz"),line("¿Cuándo empezaste a creerlo?","cuando"),
+   field("Reescribila como una idea con historia: “Hasta ahora creía que...”","rees"),
+   $("p",{class:"guia"},"No te pido que la cambies. Sólo que la vuelvas a mirar."),
+   huella("h2","Una certeza que hoy dejé entreabierta..."),otros(1)],()=>go(1),()=>go(3)),
+ ()=>screen("Parada 3","Preguntar","No buscamos primero la respuesta. Buscamos la pregunta.",[
+   $("h3",{},"Las preguntas que hoy tengo"),line("Pregunta 1","q1"),line("Pregunta 2","q2"),line("Pregunta 3","q3"),
+   $("h3",{},"Algunas preguntas llegaron desde afuera. ¿Cuál sentís que te pertenece?"),pick(HER,"her"),
+   field("Abrila: transformá una pregunta en otra que te deje explorar. Por ejemplo, de “¿Qué debería hacer?” a “¿Qué posibilidades quiero explorar?”","trans"),
+   huella("h3","Mi pregunta es...","Si tuvieras que llevarte una sola pregunta, ¿cuál sería?"),otros(2)],()=>go(2),()=>go(4)),
+ ()=>{const eq=[V("motivo"),V("h1"),V("h2"),V("h3")].filter(x=>x.trim());const ch=$("div",{class:"chips"});eq.forEach(x=>ch.append($("span",{class:"chip"},x.length>70?x.slice(0,70)+"...":x)));
+   return screen("Parada 4","Explorar","Hasta acá miraste hacia adentro. Antes de salir, miremos qué llevás con vos.",[
+   $("h3",{},"El equipaje que traés"),ch,field("Si mirás todo esto junto, ¿qué sentís que llevás con vos en este momento?","equi"),
+   $("h3",{},"Esto también cuenta"),$("p",{class:"note"},"Marcá las que te suenan."),multi(CAP,"caps"),
+   field("Algo que hacés naturalmente y quizás nunca pensaste que era una capacidad:","natural"),
+   $("h3",{},"¿Qué está pasando acá?"),$("p",{class:"situ"},"Encontrás una propuesta que realmente te interesa, pero enseguida pensás: “Yo no podría hacer eso.”"),
+   multi(EMO,"emos"),$("p",{class:"guia"},"Lo que siento importa. Pero lo que siento no tiene que decidir por mí.")],()=>go(3),()=>go(5),"Salir a encontrar")},
+ ()=>{const p=$("textarea",{readonly:"",style:"min-height:190px;font-size:.85rem"});p.value=armarPrompt();
+   const cp=$("button",{class:"ghost",onclick:async()=>{try{await navigator.clipboard.writeText(p.value)}catch(e){p.select();document.execCommand("copy")}cp.textContent="Copiado"}},"Copiar prompt");
+   return screen("Parada 4","Salir a encontrar","Ahora el mapa se hace más grande. La IA es tu guía del viaje: no sabe cuál es tu destino ni decide por vos.",[
+   $("p",{},"Copiá este texto y pegalo en el asistente de IA que uses, como Claude, ChatGPT o Gemini. Te va a ofrecer tres puertas para explorar y después una búsqueda por contraste, donde van a aparecer cosas dispares y algunas muy interesantes. Al pegarlo, tus respuestas viajan a ese servicio. Cuando termines, pedile un “resumen” y volvé acá."),
+   p,$("div",{class:"row"},cp),
+   $("h3",{},"Volvé con lo que encontraste"),field("Pegá acá el resumen que te dio la IA.","resumen","Hasta 5 puntos breves."),
+   $("h3",{},"Escuchar con criterio"),$("p",{class:"note"},"Escuchar también es separar lo que el otro dijo de lo que uno completó. Hacelo con lo que te devolvió la IA."),
+   field("¿Qué completé o interpreté yo, que la IA no dijo?","interp"),
+   huella("h4","Salí a encontrar y encontré..."),otros(3)],()=>go(4),()=>go(6))},
+ ()=>screen("Parada 5","Elegir","Elegir no es saber. Es abrir una puerta aun cuando no podés saber qué hay del otro lado.",[
+   line("Mirando todo junto, ¿qué posibilidad te da curiosidad abrir? (puede ser ninguna todavía)","posib"),
+   $("h3",{},"La puerta"),pick(["Quiero abrir esta puerta.","Todavía no. Quiero conocer algo más antes.","Descubrí que esta puerta no es para mí."],"puerta"),
+   $("h3",{},"¿Qué tipo de elección es?"),pick(["Puedo probarla y volver atrás.","Puedo modificarla si descubro algo diferente.","Es difícil de revertir y necesita más información."],"tipo"),
+   line("Lo que puedo perder","perder"),line("Lo que podría encontrar","encontrar"),
+   huella("h5","Hoy me animo a...","Mi elección"),otros(4)],()=>go(5),()=>go(7)),
+ ()=>{if(!V("h6"))S.v.h6="Todavía no sé dónde voy a llegar. Pero ya estoy en marcha.";
+   return screen("Parada 5","En marcha","Elegir fue el comienzo. El plan no es una línea recta, es un ciclo: planeo, hago, observo, aprendo, ajusto y vuelvo a hacer.",[
+   $("h3",{},"Mi próximo paso"),line("Voy a empezar por","paso","Algo pequeño: si es demasiado grande, todavía no es un primer paso."),line("Cuándo","cuandop"),line("Necesito","nec"),
+   line("Puede aparecer este obstáculo, y si aparece puedo...","obst"),line("Voy a saber que avancé cuando...","avance"),
+   huella("h6","","Mi huella en marcha")],()=>go(6),()=>go(8),"Ver mi tarjeta")},
+ ()=>{
+   const H=[["Perderse",V("h1")],["Hacer lugar",V("h2")],["Preguntar",V("h3")],["Explorar",V("h4")],["Elegir",V("h5")],["En marcha",V("h6")]].filter(x=>x[1].trim());
+   const R=[["Lo que me trajo",V("motivo")],["Mis huellas",H.map(x=>"• "+x[0]+": "+x[1]).join("\n")],["Mi equipaje",V("equi")],["Capacidades que reconocí",L(S.m.caps)],["Algo que hago naturalmente",V("natural")],["Emociones que aparecen",L(S.m.emos)],["Lo que encontré con la IA",V("resumen")],["Lo que yo completé o interpreté",V("interp")],["Mi puerta",[V("posib"),V("puerta"),V("tipo")].filter(Boolean).join(". ")],["Mi próximo paso",[V("paso")&&"Empiezo por: "+V("paso"),V("cuandop")&&"Cuándo: "+V("cuandop"),V("nec")&&"Necesito: "+V("nec"),V("obst")&&"Obstáculo y qué haría: "+V("obst"),V("avance")&&"Sabré que avancé cuando: "+V("avance")].filter(Boolean).join("\n")]].filter(x=>x[1]&&x[1]!=="(sin marcar)");
+   const txt="TODAVÍA NO: MI TARJETA DEL VIAJE\n\n"+R.map(x=>x[0].toUpperCase()+"\n"+x[1]).join("\n\n")+"\n\nTodavía no llegué. Pero ya estoy en marcha.";
+   const t=$("div",{class:"tarjeta"});R.forEach(x=>t.append($("span",{class:"k"},x[0]),$("p",{},x[1])));if(!R.length)t.append($("p",{},"Todavía no escribiste nada. Podés volver a cualquier parada y completar lo que quieras."));
+   const cp=$("button",{class:"ghost",onclick:async()=>{try{await navigator.clipboard.writeText(txt);cp.textContent="Copiado"}catch(e){cp.textContent="No se pudo copiar"}}},"Copiar");
+   const row=$("div",{class:"row"},cp);
+   row.append($("button",{onclick:async()=>{
+     try{if(window.claude&&claude.use){const d=await claude.use("downloads");if(d){await d.save({filename:"todavia-no-mi-tarjeta.txt",data:txt});return}}}catch(e){if(e&&e.code==="declined")return}
+     const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"text/plain;charset=utf-8"}));a.download="todavia-no-mi-tarjeta.txt";document.body.append(a);a.click();a.remove()}},"Guardar archivo"));
+   row.append($("button",{class:"ghost",onclick:()=>location.reload()},"Empezar de nuevo"));
+   const c=$("div",{class:"pane"});
+   c.append($("div",{class:"tag"},"Cierre"),$("h2",{},"Tu tarjeta del viaje"),$("p",{class:"guia"},"Te perdiste. Hiciste lugar. Preguntaste. Exploraste. Elegiste. Y ahora estás en movimiento. El Mientras Tanto no desapareció, pero quizás ya no lo habitás de la misma manera."),t,row,
+    $("p",{class:"note"},"Podés detenerte acá y volver más adelante con este archivo. Todavía no llegaste, pero ya estás en marcha."));
+   return c}
+];
+function landscape(st){
+ const W=window.matchMedia("(max-width:520px)").matches?400:700,H=230,k=W/700;
+ const xs=[.1,.3,.5,.7,.9].map(f=>Math.round(f*W)),ys=[150,166,146,162,148];
+ let d="M"+xs[0]+","+ys[0];
+ for(let i=0;i<4;i++){const m=(xs[i]+xs[i+1])/2;d+=" C"+m+","+ys[i]+" "+m+","+ys[i+1]+" "+xs[i+1]+","+ys[i+1]}
+ const clear=Math.min(1,S.i/8),sy=120-clear*50;
+ let dots="";
+ xs.forEach((x,i)=>{
+  const y=ys[i];
+  if(i===st)dots+='<circle cx="'+x+'" cy="'+y+'" r="26" fill="#f6c76a" opacity=".5"/><circle cx="'+x+'" cy="'+y+'" r="12" fill="#c9811c" stroke="#fff4d6" stroke-width="3"/>';
+  else if(i<st)dots+='<circle cx="'+x+'" cy="'+y+'" r="9" fill="var(--slate)" stroke="#fff" stroke-width="2"/>';
+  else dots+='<circle cx="'+x+'" cy="'+y+'" r="8" fill="#ffffff" fill-opacity=".6" stroke="var(--slate)" stroke-width="2"/>';
+ });
+ return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="'+Math.round(548*k)+'" cy="'+sy+'" r="46" fill="#fff3cf" opacity="'+(.25+.5*clear)+'"/><circle cx="'+Math.round(548*k)+'" cy="'+sy+'" r="24" fill="#fff8e3" opacity="'+(.5+.5*clear)+'"/><g transform="scale('+k+' 1)">'+
+  '<path d="M0,118 C70,82 130,94 200,110 C270,126 330,74 410,82 C490,90 560,114 700,86 L700,230 L0,230Z" fill="var(--far)"/>'+
+  '<path d="M0,140 C90,108 160,132 250,124 C340,116 400,98 480,116 C560,134 620,118 700,128 L700,230 L0,230Z" fill="var(--mid)"/>'+
+  '<path d="M0,184 C100,158 190,180 290,168 C390,156 470,184 560,172 C620,164 660,168 700,174 L700,230 L0,230Z" fill="var(--near)"/>'+
+  '</g><path d="'+d+'" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="1 9"/>'+dots+
+  '<g class="fogbands" transform="scale('+k+' 1)"><ellipse cx="150" cy="112" rx="190" ry="26" fill="var(--fogc)" opacity=".5"/><ellipse cx="470" cy="132" rx="230" ry="30" fill="var(--fogc)" opacity=".45"/><ellipse cx="640" cy="96" rx="150" ry="22" fill="var(--fogc)" opacity=".4"/><ellipse cx="300" cy="176" rx="260" ry="24" fill="var(--fogc)" opacity=".3"/></g></svg>';
+}
+window.addEventListener("resize",()=>{const h=document.getElementById("path");if(h)h.innerHTML=landscape(STOP[S.i])});
+function render(){
+ const st=STOP[S.i],h=document.getElementById("path");
+ h.innerHTML=landscape(st);
+ h.setAttribute("aria-label",st<0?"Umbral del recorrido":st>=5?"Recorrido completo":"Parada "+(st+1)+" de 5: "+NAMES[st]);
+ document.documentElement.style.setProperty("--fog",String((0.92-0.84*S.i/8).toFixed(2)));
+ const s=document.getElementById("stage");s.innerHTML="";s.append(STEPS[S.i]());window.scrollTo(0,0);
+}
+render();
+</script>
+</body>
+</html>
