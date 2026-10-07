@@ -1,0 +1,190 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Todavía no (Mientras Tanto)</title>
+<style>
+:root{--bg:#eef1e2;--fog:#c3ccb8;--card:#fbfaf3;--ink:#2a3a30;--mut:#66705f;--g:#33483a;--gl:#e2e9d5;--ro:#efdccd;--line:#d5d8c4;--niebla:.6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b211d;--fog:#0c100d;--card:#242c26;--ink:#eef0e6;--mut:#a5ae9c;--g:#a9c9b0;--gl:#2d382f;--ro:#3c3029;--line:#3a4439}}
+:root[data-theme="dark"]{--bg:#1b211d;--fog:#0c100d;--card:#242c26;--ink:#eef0e6;--mut:#a5ae9c;--g:#a9c9b0;--gl:#2d382f;--ro:#3c3029;--line:#3a4439}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 Georgia,"Times New Roman",serif}
+body::before{content:"";position:fixed;inset:0;background:var(--fog);opacity:var(--niebla);transition:opacity 1.4s;pointer-events:none;z-index:-1}
+main{max-width:700px;margin:0 auto;padding:22px 18px 50px}
+h1{font-size:2.2rem;margin:0;color:var(--g)}
+.sub{color:var(--mut);font-style:italic;margin:.2em 0 1em}
+.path{display:flex;gap:6px;margin:0 0 16px;font:.72rem system-ui,sans-serif}
+.path div{flex:1;text-align:center;padding:6px 2px;border-radius:999px;background:var(--gl);color:var(--mut)}
+.path .on{background:var(--g);color:var(--card);font-weight:700}
+.path .done{background:var(--ro);color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 20px}
+.tag{font:700 .75rem system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
+h2{margin:.25em 0 .3em;font-size:1.45rem;color:var(--g)}
+.guia{font-style:italic;color:var(--mut);margin:.2em 0 14px}
+.cartel{font-size:1.35rem;color:var(--g);margin:.4em 0}
+h3{font:700 .8rem system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:20px 0 6px}
+.f{margin:10px 0}.f label{display:block;font:.9rem system-ui,sans-serif;color:var(--mut);margin-bottom:4px}
+textarea,input{width:100%;padding:11px;font:inherit;font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px}
+textarea{min-height:84px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+button{font:600 1rem system-ui,sans-serif;padding:11px 18px;border-radius:999px;border:2px solid var(--g);background:var(--g);color:var(--card);cursor:pointer}
+button.ghost{background:transparent;color:var(--g)}
+button.opt{width:100%;text-align:left;border-radius:14px;background:var(--bg);color:var(--ink);border:2px solid var(--line);font-weight:500}
+button.opt.sel{border-color:var(--g);background:var(--gl)}
+.stack{display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+button.chip,span.chip{font:.85rem system-ui,sans-serif;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--bg);color:var(--ink);border:2px solid var(--line)}
+button.chip.sel{border-color:var(--g);background:var(--gl)}
+span.chip{border-color:var(--ro);background:var(--ro)}
+.huella{background:var(--ro);border-radius:14px;padding:14px;margin-top:20px}
+.huella b{font:700 .8rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.note{font:.85rem system-ui,sans-serif;color:var(--mut);margin:6px 0}
+.situ{font-size:1.15rem;font-style:italic;margin:.3em 0 .5em}
+details.otros{margin-top:14px;font:.95rem system-ui,sans-serif}
+details.otros summary{cursor:pointer;color:var(--g);font-weight:600}
+.ot{font-family:Georgia,serif;font-style:italic;margin:.5em 0;padding-left:12px;border-left:3px solid var(--line)}
+.tarjeta{background:var(--ro);border-radius:16px;padding:18px;margin-top:12px}
+.tarjeta .k{display:block;font:700 .72rem system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.tarjeta p{margin:.15em 0 .9em;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<main>
+<h1>Todavía no</h1>
+<p class="sub">Un recorrido por el Mientras Tanto. Unos 15 a 20 minutos.</p>
+<div class="path" id="path"></div>
+<div id="stage"></div>
+</main>
+<script>
+const $=(t,a={},...k)=>{const e=document.createElement(t);for(const x in a){x==="class"?e.className=a[x]:x==="onclick"?e.onclick=a[x]:e.setAttribute(x,a[x])}k.forEach(c=>e.append(c));return e};
+const S={i:0,v:{},m:{}};
+const V=k=>S.v[k]||"";
+const L=a=>a&&a.length?a.join(", "):"(sin marcar)";
+const NAMES=["Perderse","Hacer lugar","Preguntar","Explorar","Elegir y marcha"],STOP=[-1,0,1,2,3,3,4,4,5];
+const FR=["Tengo que conseguir un trabajo estable.","A esta edad ya debería saber qué quiero.","Si empiezo algo, tengo que terminarlo.","No soy bueno o buena para eso.","Eso no es para mí.","Ya es demasiado tarde.","Los demás esperan que yo..."];
+const HER=["¿Qué debería estar haciendo a esta edad?","¿Cómo sé que estoy tomando la decisión correcta?","¿Y si me equivoco?","¿Qué esperan los demás de mí?","Ninguna me pertenece del todo."];
+const CAP=["Escucho bien.","Encuentro alternativas cuando algo no funciona.","Aprendo rápido cuando algo me interesa.","Me gusta explicarles cosas a otros.","Tengo facilidad para organizar.","Hago buenas preguntas.","Veo cosas que otros no ven.","Cuando algo me importa, insisto.","Me adapto cuando cambian las circunstancias.","Me gusta mejorar cosas que ya existen.","Conecto personas o ideas.","Hay cosas que otros reconocen en mí y yo no valoro."];
+const EMO=["Miedo","Inseguridad","Falta de información","Falta de experiencia","Desinterés","Deseo","Entusiasmo","Curiosidad"];
+const OTROS=[
+ ["Encontré que hace mucho no miro sin buscar nada.","Me pasó que no supe qué hacer y no pasó nada malo.","Me quedó una palabra: tal vez."],
+ ["Hasta ahora creía que a mi edad era tarde. Ahora me pregunto quién lo dijo primero.","Esa voz era la de mi padre, no la mía.","Dejé entreabierta la idea de que tengo que terminar todo lo que empiezo."],
+ ["¿Qué quiero hacer con el tiempo de trabajo que me queda?","Pasé de “¿cómo no equivocarme?” a “¿qué necesito saber para dar un primer paso?”","¿Qué parte de lo que sé le puede servir a alguien más?"],
+ ["Salí a encontrar y descubrí que explicar me entusiasma más de lo que creía.","No encontré lo que esperaba, pero descubrí que no quiero volver a vender.","Hablé con alguien que hace algo parecido y me dio curiosidad."],
+ ["Hoy me animo a llamar a una persona que hace lo que me intriga.","Elegí probar un mes sin dejar lo que tengo.","Todavía no sé dónde voy a llegar. Pero ya estoy en marcha."]
+];
+function field(label,key,ph,min){const w=$("div",{class:"f"});if(label)w.append($("label",{},label));const t=$("textarea",{placeholder:ph||""});if(min)t.style.minHeight=min;t.value=V(key);t.oninput=()=>S.v[key]=t.value;w.append(t);return w}
+function line(label,key,ph){const w=$("div",{class:"f"});w.append($("label",{},label));const t=$("input",{type:"text",placeholder:ph||""});t.value=V(key);t.oninput=()=>S.v[key]=t.value;w.append(t);return w}
+function pick(list,key){const w=$("div",{class:"stack"});list.forEach(t=>w.append($("button",{class:"opt"+(V(key)===t?" sel":""),onclick:()=>{S.v[key]=t;[...w.children].forEach(x=>x.className="opt"+(x.textContent===t?" sel":""))}},t)));return w}
+function multi(list,key){S.m[key]=S.m[key]||[];const w=$("div",{class:"chips"});list.forEach(t=>{const b=$("button",{class:"chip"+(S.m[key].includes(t)?" sel":""),onclick:()=>{const a=S.m[key],i=a.indexOf(t);i<0?a.push(t):a.splice(i,1);b.classList.toggle("sel")}},t);w.append(b)});return w}
+function huella(key,ph,t){return $("div",{class:"huella"},$("b",{},t||"Tu huella de esta parada"),$("p",{class:"note"},"Una frase, una palabra o algo que te quedó. No hace falta explicar todo."),field("",key,ph,"60px"))}
+function otros(n){return $("details",{class:"otros"},$("summary",{},"Ver huellas de ejemplo de otros recorridos"),...OTROS[n].map(t=>$("p",{class:"ot"},"“"+t+"”")),$("p",{class:"note"},"No hay mejor huella ni comparación. No se trata de coincidir."))}
+function screen(tag,title,guia,kids,back,next,label){
+ const c=$("div",{class:"card"});c.append($("div",{class:"tag"},tag),$("h2",{},title));if(guia)c.append($("p",{class:"guia"},guia));kids.forEach(k=>c.append(k));
+ c.append($("div",{class:"row"},next?$("button",{onclick:next},label||"Seguir"):"",back?$("button",{class:"ghost",onclick:back},"Volver"):""));return c}
+const go=n=>{S.i=n;render()};
+function armarPrompt(){
+ const g=k=>V(k)||"(sin responder)";
+ return `Quiero que actúes como mi guía de viaje, no como un oráculo ni como un terapeuta. Estoy en un recorrido de exploración personal llamado "Todavía no". Todavía no sé qué quiero y no tengo que saberlo. No me digas qué hacer ni quién soy: preguntame, escuchame, devolveme lo que digo, conectá cosas y proponeme posibilidades. Hablame en español rioplatense, con calidez, sin usar guiones ni rayas.
+
+LO QUE LLEVO EN MI EQUIPAJE
+Lo que me trajo hasta acá: ${g("motivo")}
+Una certeza que dejé entreabierta: ${g("h2")}
+La pregunta que me acompaña: ${g("h3")}
+Capacidades con las que cuento: ${L(S.m.caps)}
+Algo que hago naturalmente: ${g("natural")}
+Emociones que aparecen frente a una posibilidad: ${L(S.m.emos)}
+Lo que siento que llevo conmigo ahora: ${g("equi")}
+
+CÓMO QUIERO EL RECORRIDO
+Quiero hacerlo por partes. Primero dame solo 3 puertas posibles para explorar, bien distintas entre sí y coherentes con mi pregunta y mis capacidades. Para cada una incluí una frase que la explique, la trampa o riesgo que podría tener y un experimento de 20 minutos para probarla sin comprometerme. No elijas por mí. Después esperá a que yo escriba "siguiente".
+
+PARA SEGUIR EXPLORANDO
+1. Con mi "siguiente", explicame en pocas frases por qué ahora vamos a indagar por contraste: vamos a mirar una de esas puertas desde mundos muy lejanos para pensarla distinto. Decime que me divierta con esta búsqueda, porque van a aparecer cosas dispares, pero también algo interesante, a veces genial, que espeja lo que me puede interesar. Preguntame cuál de las 3 puertas me llama más. Yo elijo una y no sigas hasta que elija.
+2. Proponeme 3 escenarios de contraste, bien lejos del tema y bien distintos entre sí, de mundos muy diferentes (por ejemplo ficción, naturaleza, oficios, deporte, arte, historia, el espacio). Cambialos cada vez: no uses siempre los mismos ni repitas ninguno anterior. Una línea para cada uno, para que yo elija por número.
+3. Cuando yo elija un contraste, explorá ese mundo sin relacionarlo todavía con mi puerta: listá entre 6 y 8 elementos (estructuras, dinámicas, conflictos, decisiones, transformaciones), cada uno en pocas palabras. Yo elijo 2 o 3 para llevar al cruce.
+4. Con los elementos que elegí, generá 2 o 3 cruces con la puerta que elegí. Un cruce no es una comparación ni una explicación de en qué se parecen: es una posibilidad nueva que nace de combinar ambos mundos. No busques similitudes obvias: cada cruce tiene que introducir una diferencia real en la manera habitual de pensar esa puerta, y tiene que poder soñarse como algo concreto. Formulalos como "¿Y si...?". En total no más de 80 palabras. Sin explicaciones largas ni consejos genéricos.
+5. Preguntame cuál de los cruces me mueve de lugar. Yo decido. Cuando elija, decime que podemos seguir con un nuevo escenario de contraste, o que puedo hacerte mis propias preguntas, y que cuando esté lista o listo te pida un "resumen" para volver al juego.
+Si escribo "nuevo escenario", ofrecé 3 contrastes nuevos sin repetir ninguno anterior. Si escribo "otra puerta", volvé al paso 1 con las otras. Si escribo "tensionar", decime qué supuesto pone en duda el cruce elegido y dónde podría fallar, en no más de 80 palabras.
+Cuando escriba "resumen", dame lo que fuimos encontrando en hasta 5 puntos de pocas palabras. Voy a llevarlos de vuelta y a separar lo que vos dijiste de lo que yo completé.`;
+}
+const STEPS=[
+ ()=>{const c=screen("Umbral","Bienvenido al Mientras Tanto","",[
+   $("p",{class:"cartel"},"Bienvenido al territorio de quienes compartimos un Todavía no."),
+   $("p",{class:"guia"},"Todavía no sé. Todavía no encontré. Todavía no decidí. Todavía no empecé. Quizás no tengas que resolverlo todavía."),
+   $("p",{class:"situ"},"¿Qué te trae hasta acá?"),
+   field("","motivo","Una situación, una pregunta, un deseo, una curiosidad. O “no sé”."),
+   $("p",{class:"note"},"Nada de lo que escribas se envía a ningún lado. Queda en esta pantalla y en el archivo que te lleves.")],null,()=>go(1),"Entrar");
+  c.lastChild.append($("button",{class:"ghost",onclick:()=>{S.v.motivo=V("motivo")||"No sé, quiero ver qué encuentro";go(1)}},"No sé, quiero ver qué encuentro"));return c},
+ ()=>screen("Parada 1","Perderse","No vamos a buscar una respuesta. Vamos a perdernos un poco.",[
+   $("h3",{},"¿Qué ves?"),$("p",{class:"situ"},"Una persona está parada frente a una puerta, con la mano en el picaporte."),
+   field("¿Qué ves?","ve"),field("¿Eso es lo único que podría estar pasando? Escribí otra posibilidad.","ve2"),
+   $("p",{class:"note"},"¿Qué cambió: la situación o tu manera de mirarla?"),
+   $("h3",{},"Jugar con el no sé"),line("No sé qué quiero...","n1"),line("No necesito saberlo ahora porque...","n2"),line("No saber puede ser el comienzo de...","n3"),
+   huella("h1","Encontré... Me pasó... Me quedó..."),otros(0)],()=>go(0),()=>go(2)),
+ ()=>screen("Parada 2","Hacer lugar","A veces no necesitamos tirar nada. Sólo abrir una ventana.",[
+   $("h3",{},"¿Cuál de estas frases te suena más?"),pick(FR,"cert"),
+   line("¿De quién parece ser esa voz?","voz"),line("¿Cuándo empezaste a creerlo?","cuando"),
+   field("Reescribila como una idea con historia: “Hasta ahora creía que...”","rees"),
+   $("p",{class:"guia"},"No te pido que la cambies. Sólo que la vuelvas a mirar."),
+   huella("h2","Una certeza que hoy dejé entreabierta..."),otros(1)],()=>go(1),()=>go(3)),
+ ()=>screen("Parada 3","Preguntar","No buscamos primero la respuesta. Buscamos la pregunta.",[
+   $("h3",{},"Las preguntas que hoy tengo"),line("Pregunta 1","q1"),line("Pregunta 2","q2"),line("Pregunta 3","q3"),
+   $("h3",{},"Algunas preguntas llegaron desde afuera. ¿Cuál sentís que te pertenece?"),pick(HER,"her"),
+   field("Abrila: transformá una pregunta en otra que te deje explorar. Por ejemplo, de “¿Qué debería hacer?” a “¿Qué posibilidades quiero explorar?”","trans"),
+   huella("h3","Mi pregunta es...","Si tuvieras que llevarte una sola pregunta, ¿cuál sería?"),otros(2)],()=>go(2),()=>go(4)),
+ ()=>{const eq=[V("motivo"),V("h1"),V("h2"),V("h3")].filter(x=>x.trim());const ch=$("div",{class:"chips"});eq.forEach(x=>ch.append($("span",{class:"chip"},x.length>70?x.slice(0,70)+"...":x)));
+   return screen("Parada 4","Explorar","Hasta acá miraste hacia adentro. Antes de salir, miremos qué llevás con vos.",[
+   $("h3",{},"El equipaje que traés"),ch,field("Si mirás todo esto junto, ¿qué sentís que llevás con vos en este momento?","equi"),
+   $("h3",{},"Esto también cuenta"),$("p",{class:"note"},"Marcá las que te suenan."),multi(CAP,"caps"),
+   field("Algo que hacés naturalmente y quizás nunca pensaste que era una capacidad:","natural"),
+   $("h3",{},"¿Qué está pasando acá?"),$("p",{class:"situ"},"Encontrás una propuesta que realmente te interesa, pero enseguida pensás: “Yo no podría hacer eso.”"),
+   multi(EMO,"emos"),$("p",{class:"guia"},"Lo que siento importa. Pero lo que siento no tiene que decidir por mí.")],()=>go(3),()=>go(5),"Salir a encontrar")},
+ ()=>{const p=$("textarea",{readonly:"",style:"min-height:190px;font-size:.85rem"});p.value=armarPrompt();
+   const cp=$("button",{class:"ghost",onclick:async()=>{try{await navigator.clipboard.writeText(p.value)}catch(e){p.select();document.execCommand("copy")}cp.textContent="Copiado"}},"Copiar prompt");
+   return screen("Parada 4","Salir a encontrar","Ahora el mapa se hace más grande. La IA es tu guía del viaje: no sabe cuál es tu destino ni decide por vos.",[
+   $("p",{},"Copiá este texto y pegalo en el asistente de IA que uses, como Claude, ChatGPT o Gemini. Te va a ofrecer tres puertas para explorar y después una búsqueda por contraste, donde van a aparecer cosas dispares y algunas muy interesantes. Al pegarlo, tus respuestas viajan a ese servicio. Cuando termines, pedile un “resumen” y volvé acá."),
+   p,$("div",{class:"row"},cp),
+   $("h3",{},"Volvé con lo que encontraste"),field("Pegá acá el resumen que te dio la IA.","resumen","Hasta 5 puntos breves."),
+   $("h3",{},"Escuchar con criterio"),$("p",{class:"note"},"Escuchar también es separar lo que el otro dijo de lo que uno completó. Hacelo con lo que te devolvió la IA."),
+   field("¿Qué completé o interpreté yo, que la IA no dijo?","interp"),
+   huella("h4","Salí a encontrar y encontré..."),otros(3)],()=>go(4),()=>go(6))},
+ ()=>screen("Parada 5","Elegir","Elegir no es saber. Es abrir una puerta aun cuando no podés saber qué hay del otro lado.",[
+   line("Mirando todo junto, ¿qué posibilidad te da curiosidad abrir? (puede ser ninguna todavía)","posib"),
+   $("h3",{},"La puerta"),pick(["Quiero abrir esta puerta.","Todavía no. Quiero conocer algo más antes.","Descubrí que esta puerta no es para mí."],"puerta"),
+   $("h3",{},"¿Qué tipo de elección es?"),pick(["Puedo probarla y volver atrás.","Puedo modificarla si descubro algo diferente.","Es difícil de revertir y necesita más información."],"tipo"),
+   line("Lo que puedo perder","perder"),line("Lo que podría encontrar","encontrar"),
+   huella("h5","Hoy me animo a...","Mi elección"),otros(4)],()=>go(5),()=>go(7)),
+ ()=>{if(!V("h6"))S.v.h6="Todavía no sé dónde voy a llegar. Pero ya estoy en marcha.";
+   return screen("Parada 5","En marcha","Elegir fue el comienzo. El plan no es una línea recta, es un ciclo: planeo, hago, observo, aprendo, ajusto y vuelvo a hacer.",[
+   $("h3",{},"Mi próximo paso"),line("Voy a empezar por","paso","Algo pequeño: si es demasiado grande, todavía no es un primer paso."),line("Cuándo","cuandop"),line("Necesito","nec"),
+   line("Puede aparecer este obstáculo, y si aparece puedo...","obst"),line("Voy a saber que avancé cuando...","avance"),
+   huella("h6","","Mi huella en marcha")],()=>go(6),()=>go(8),"Ver mi tarjeta")},
+ ()=>{
+   const H=[["Perderse",V("h1")],["Hacer lugar",V("h2")],["Preguntar",V("h3")],["Explorar",V("h4")],["Elegir",V("h5")],["En marcha",V("h6")]].filter(x=>x[1].trim());
+   const R=[["Lo que me trajo",V("motivo")],["Mis huellas",H.map(x=>"• "+x[0]+": "+x[1]).join("\n")],["Mi equipaje",V("equi")],["Capacidades que reconocí",L(S.m.caps)],["Algo que hago naturalmente",V("natural")],["Emociones que aparecen",L(S.m.emos)],["Lo que encontré con la IA",V("resumen")],["Lo que yo completé o interpreté",V("interp")],["Mi puerta",[V("posib"),V("puerta"),V("tipo")].filter(Boolean).join(". ")],["Mi próximo paso",[V("paso")&&"Empiezo por: "+V("paso"),V("cuandop")&&"Cuándo: "+V("cuandop"),V("nec")&&"Necesito: "+V("nec"),V("obst")&&"Obstáculo y qué haría: "+V("obst"),V("avance")&&"Sabré que avancé cuando: "+V("avance")].filter(Boolean).join("\n")]].filter(x=>x[1]&&x[1]!=="(sin marcar)");
+   const txt="TODAVÍA NO: MI TARJETA DEL VIAJE\n\n"+R.map(x=>x[0].toUpperCase()+"\n"+x[1]).join("\n\n")+"\n\nTodavía no llegué. Pero ya estoy en marcha.";
+   const t=$("div",{class:"tarjeta"});R.forEach(x=>t.append($("span",{class:"k"},x[0]),$("p",{},x[1])));
+   const cp=$("button",{class:"ghost",onclick:async()=>{try{await navigator.clipboard.writeText(txt);cp.textContent="Copiado"}catch(e){cp.textContent="No se pudo copiar"}}},"Copiar");
+   const row=$("div",{class:"row"},cp);
+   row.append($("button",{onclick:()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"text/plain;charset=utf-8"}));a.download="todavia-no-mi-tarjeta.txt";document.body.append(a);a.click();a.remove()}},"Guardar archivo"));
+   row.append($("button",{class:"ghost",onclick:()=>location.reload()},"Empezar de nuevo"));
+   const c=$("div",{class:"card"});
+   c.append($("div",{class:"tag"},"Cierre"),$("h2",{},"Tu tarjeta del viaje"),$("p",{class:"guia"},"Te perdiste. Hiciste lugar. Preguntaste. Exploraste. Elegiste. Y ahora estás en movimiento. El Mientras Tanto no desapareció, pero quizás ya no lo habitás de la misma manera."),t,row,
+    $("p",{class:"note"},"Podés detenerte acá y volver más adelante con este archivo. Todavía no llegaste, pero ya estás en marcha."));
+   return c}
+];
+function render(){
+ const st=STOP[S.i],p=document.getElementById("path");p.innerHTML="";
+ NAMES.forEach((n,i)=>p.append($("div",{class:i===st?"on":i<st?"done":""},n)));
+ document.documentElement.style.setProperty("--niebla",String(Math.max(0,.6-.075*S.i)));
+ const s=document.getElementById("stage");s.innerHTML="";s.append(STEPS[S.i]());window.scrollTo(0,0);
+}
+render();
+</script>
+</body>
+</html>
+
+</body></html>
