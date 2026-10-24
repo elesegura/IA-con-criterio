@@ -1,0 +1,486 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Viajes en el tiempo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Diseño: misma estructura que el bolillero de narrativas (banda superior con pestañas, columna de trabajo de 860px) con paleta de mar profundo para distinguirlo. */
+:root{
+  --bg:#f3f7f6;--surface:#ffffff;--ink:#14231f;--ink2:#4d625c;--ink3:#6f847d;
+  --line:rgba(20,35,31,.12);--line2:rgba(20,35,31,.24);
+  --accent:#0F6E56;--accent-ink:#ffffff;--accent-soft:#E1F5EE;--accent-text:#085041;--accent-line:#5DCAA5;
+  --hdr:#04342C;--hdr-ink:#ffffff;--hdr-muted:rgba(255,255,255,.64);--hdr-line:rgba(255,255,255,.14);--hdr-accent:#5DCAA5;
+  --warm-soft:#FAEEDA;--warm-ink:#633806;
+  --danger:#993C1D;--danger-soft:#FAECE7;--danger-line:#F0997B;
+  --person:#993C1D;
+  --font-display:'Bricolage Grotesque','Instrument Sans',system-ui,sans-serif;
+  --font-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1a17;--surface:#18271f;--ink:#e9f4f0;--ink2:#a3bbb3;--ink3:#7a948b;
+  --line:rgba(255,255,255,.1);--line2:rgba(255,255,255,.22);
+  --accent:#1D9E75;--accent-ink:#ffffff;--accent-soft:#0a2e24;--accent-text:#9FE1CB;--accent-line:#1f6b53;
+  --hdr:#072620;--hdr-ink:#ffffff;--hdr-muted:rgba(255,255,255,.6);--hdr-line:rgba(255,255,255,.12);--hdr-accent:#5DCAA5;
+  --warm-soft:#2a1a04;--warm-ink:#FAC775;
+  --danger:#F0997B;--danger-soft:#2e1208;--danger-line:#a4482a;
+  --person:#F0997B;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1a17;--surface:#18271f;--ink:#e9f4f0;--ink2:#a3bbb3;--ink3:#7a948b;
+  --line:rgba(255,255,255,.1);--line2:rgba(255,255,255,.22);
+  --accent:#1D9E75;--accent-ink:#ffffff;--accent-soft:#0a2e24;--accent-text:#9FE1CB;--accent-line:#1f6b53;
+  --hdr:#072620;--hdr-ink:#ffffff;--hdr-muted:rgba(255,255,255,.6);--hdr-line:rgba(255,255,255,.12);--hdr-accent:#5DCAA5;
+  --warm-soft:#2a1a04;--warm-ink:#FAC775;
+  --danger:#F0997B;--danger-soft:#2e1208;--danger-line:#a4482a;
+  --person:#F0997B;
+  color-scheme:dark}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55;display:flex;flex-direction:column;min-height:100vh}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{width:100%;max-width:860px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{background:var(--hdr);color:var(--hdr-ink)}
+.hero{padding-block:28px 18px}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--hdr-accent);margin:0 0 8px}
+.hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(26px,5.5vw,40px);line-height:1.08;margin:0 0 6px;text-wrap:balance}
+.hero p{margin:0;color:var(--hdr-muted);font-size:14px;max-width:60ch}
+.tabs{display:flex;gap:2px;overflow-x:auto;border-top:1px solid var(--hdr-line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--hdr-muted);padding:11px 14px;font-size:13px;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--hdr-ink)}
+.tab.active{color:var(--hdr-ink);border-bottom-color:var(--hdr-accent)}
+
+main{flex:1;padding-block:28px 56px}
+.panel{display:none}
+.panel.active{display:block}
+h2.sec{font-family:var(--font-display);font-weight:600;font-size:18px;margin:0 0 4px}
+.slabel{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);margin:0 0 8px}
+.muted{color:var(--ink2);font-size:13px;margin:0 0 12px}
+.hint{font-size:12px;color:var(--ink3);margin:6px 0 0}
+.divider{border:0;border-top:1px solid var(--line);margin:28px 0}
+
+input[type=text],textarea{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surface);color:var(--ink);font-size:14px}
+input[type=text]:focus,textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+textarea{resize:vertical;min-height:56px;line-height:1.45}
+.irow{display:flex;gap:8px;flex-wrap:wrap}
+.irow input{flex:1;min-width:180px}
+
+.btn{padding:9px 16px;border-radius:8px;border:1px solid var(--line2);background:var(--surface);color:var(--ink);font-size:13px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--accent-soft)}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-size:14px;padding:11px 22px;font-weight:500}
+.btn-primary:hover{background:var(--accent);filter:brightness(1.1)}
+.btn-danger{background:transparent;color:var(--danger);border-color:var(--danger-line)}
+.btn-danger:hover{background:var(--danger-soft)}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:99px;padding:2px 4px 2px 12px;font-size:13px;color:var(--accent-text)}
+.chip-x{background:none;border:0;cursor:pointer;font-size:17px;line-height:1;padding:2px 7px;color:var(--accent-text);opacity:.65;border-radius:99px}
+.chip-x:hover{opacity:1}
+.start-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px 14px}
+.stat b{display:block;font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.stat span{font-size:11px;color:var(--ink3)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.empty{text-align:center;padding:44px 12px;color:var(--ink3)}
+
+.rcard{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.rcard.new{border-color:var(--accent)}
+.rhead{padding:11px 16px;border-bottom:1px solid var(--line)}
+.rnum{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.consigna{padding:14px 16px;background:var(--warm-soft);border-bottom:1px solid var(--line);font-size:14px;line-height:1.45;color:var(--warm-ink)}
+.arow{display:grid;grid-template-columns:minmax(130px,190px) minmax(0,1fr) minmax(0,1.4fr);border-bottom:1px solid var(--line)}
+.arow:last-child{border-bottom:0}
+.acell{padding:14px 16px;border-right:1px solid var(--line);min-width:0}
+.acell:last-child{border-right:0}
+.clabel{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
+.cval{font-size:14px;font-weight:600}
+.cval.persona{color:var(--person);font-family:var(--font-display);font-size:24px;line-height:1.15}
+.cval.cont{font-family:var(--font-display);font-size:21px;line-height:1.15;color:var(--accent-text);text-wrap:balance}
+.qs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.qs li{font-size:15px;font-weight:600;line-height:1.4;padding-left:14px;position:relative}
+.qs li::before{content:'';position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* config */
+.opt{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.opt-t{font-weight:600;font-size:14px}
+.opt-d{font-size:12px;color:var(--ink3)}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:8px;overflow:hidden}
+.seg-btn{background:var(--surface);border:0;padding:7px 18px;font-size:13px;cursor:pointer;color:var(--ink2)}
+.seg-btn+.seg-btn{border-left:1px solid var(--line2)}
+.seg-btn.on{background:var(--accent);color:var(--accent-ink)}
+.cfg-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.cfg-item{display:flex;align-items:flex-start;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+.cfg-item input[type=text]{flex:1;min-width:0;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;padding:5px 0}
+.cfg-item input[type=text]:focus{border-bottom-color:var(--accent);box-shadow:none}
+.cfg-item textarea{flex:1;min-width:0}
+
+/* timer */
+.timer{text-align:center;padding:10px 0 24px}
+.ring{width:170px;height:170px;margin:0 auto 4px;display:block}
+.ring-bg{fill:none;stroke:var(--line);stroke-width:8}
+.ring-fg{fill:none;stroke:var(--accent);stroke-width:8;stroke-linecap:round;stroke-dasharray:502.65;transition:stroke-dashoffset .5s linear}
+.ring-fg.warn{stroke:var(--danger)}
+.tdisp{font-family:var(--font-display);font-size:68px;font-weight:600;letter-spacing:-2px;font-variant-numeric:tabular-nums;line-height:1.1}
+.tdisp.warn{color:var(--danger)}
+.presets,.tbtns{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+.pre{padding:5px 14px;border-radius:99px;border:1px solid var(--line2);background:transparent;color:var(--ink2);font-size:13px;cursor:pointer}
+.pre:hover{background:var(--surface);color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+.card h3{font-family:var(--font-display);font-size:15px;font-weight:600;margin:0 0 8px}
+.list{list-style:none;margin:0;padding:0}
+.list li{font-size:14px;color:var(--ink2);padding:7px 0;border-bottom:1px solid var(--line);display:flex;gap:10px}
+.list li:last-child{border-bottom:0}
+.list li::before{content:'›';color:var(--accent);flex:none;font-weight:700}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:13px;z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+footer{text-align:center;font-size:12px;color:var(--ink3);padding-block:20px 28px}
+
+@media (max-width:560px){
+  .arow{grid-template-columns:minmax(0,1fr)}
+  .acell{border-right:0;border-bottom:1px solid var(--line)}
+  .acell:last-child{border-bottom:0}
+  .tdisp{font-size:56px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="band">
+  <div class="wrap hero">
+    <p class="eyebrow">Bolillero de relatos</p>
+    <h1>Viajes en el tiempo</h1>
+    <p>Un viaje, una persona y una historia para contar</p>
+  </div>
+  <div class="wrap">
+    <nav class="tabs" aria-label="Secciones">
+      <button type="button" class="tab active" data-tab="setup" onclick="goTab('setup')">Participantes</button>
+      <button type="button" class="tab" data-tab="sorteo" onclick="goTab('sorteo')">Sorteo</button>
+      <button type="button" class="tab" data-tab="timer" onclick="goTab('timer')">Temporizador</button>
+      <button type="button" class="tab" data-tab="config" onclick="goTab('config')">Configuración</button>
+    </nav>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <section class="panel active" id="tab-setup">
+    <p class="slabel">Participantes</p>
+    <div class="irow">
+      <input type="text" id="nameInput" placeholder="Un nombre o varios separados por coma" maxlength="400" aria-label="Nombres de los participantes">
+      <button type="button" class="btn" onclick="addParticipants()">Agregar</button>
+    </div>
+    <p class="hint">Ejemplo: Ana, Bruno, Carla</p>
+    <div class="chips" id="chips"></div>
+    <hr class="divider">
+    <div class="start-row">
+      <span class="muted" style="margin:0" id="countLabel">0 participantes</span>
+      <button type="button" class="btn btn-primary" onclick="goTab('sorteo')">Ir al sorteo</button>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-sorteo">
+    <div class="stats">
+      <div class="stat"><b id="statR">0</b><span>Turnos sorteados</span></div>
+      <div class="stat"><b id="statC">0</b><span>Personas ya sorteadas</span></div>
+      <div class="stat"><b id="statP">0</b><span>Participantes</span></div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" onclick="sortear()">Sortear turno</button>
+      <button type="button" class="btn btn-danger" onclick="confirmClick(this,resetSorteo)">Reiniciar sorteo</button>
+    </div>
+    <div id="resultArea"></div>
+  </section>
+
+  <section class="panel" id="tab-timer">
+    <div class="timer">
+      <svg class="ring" viewBox="0 0 180 180" aria-hidden="true">
+        <circle class="ring-bg" cx="90" cy="90" r="80"/>
+        <circle class="ring-fg" id="timerRing" cx="90" cy="90" r="80" transform="rotate(-90 90 90)"/>
+      </svg>
+      <div class="tdisp" id="tdisp" role="timer">1:00</div>
+      <div class="presets">
+        <button type="button" class="pre" onclick="setTimer(60)">1 min</button>
+        <button type="button" class="pre" onclick="setTimer(90)">1:30</button>
+        <button type="button" class="pre" onclick="setTimer(120)">2 min</button>
+        <button type="button" class="pre" onclick="setTimer(180)">3 min</button>
+      </div>
+      <div class="tbtns">
+        <button type="button" class="btn btn-primary" id="btnTimer" onclick="toggleTimer()">Iniciar</button>
+        <button type="button" class="btn" onclick="resetTimer()">Reiniciar</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Reglas de tiempo</h3>
+      <ul class="list">
+        <li>Un momento para elegir el lugar y una de las dos preguntas antes de empezar</li>
+        <li>1 a 2 minutos de relato por participante</li>
+        <li>Quien escucha puede sumar una sugerencia al final</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="panel" id="tab-config">
+    <h2 class="sec">Dinámica</h2>
+    <p class="muted">Los cambios se aplican al próximo sorteo y quedan guardados en este navegador.</p>
+    <div id="cfgDinamica"></div>
+
+    <hr class="divider">
+
+    <h2 class="sec">Viajes</h2>
+    <p class="muted">A cada persona le toca uno y elige un lugar al que fue según ese viaje. Salen todos antes de que se repita alguno.</p>
+    <div class="cfg-list" id="cfgViajes"></div>
+    <div class="irow">
+      <input type="text" id="newViaje" placeholder="Nuevo tipo de viaje" maxlength="120" aria-label="Nuevo tipo de viaje">
+      <button type="button" class="btn btn-sm" onclick="addViaje()">Agregar</button>
+    </div>
+
+    <hr class="divider">
+
+    <h2 class="sec">Preguntas</h2>
+    <p class="muted">La persona sorteada recibe dos de estas preguntas al azar y elige una.</p>
+    <div class="cfg-list" id="cfgPreguntas"></div>
+    <button type="button" class="btn btn-sm" onclick="addPreg()">Agregar pregunta</button>
+
+    <hr class="divider">
+
+    <button type="button" class="btn btn-danger" onclick="confirmClick(this,restoreDefaults)">Restaurar valores originales</button>
+  </section>
+
+</main>
+
+<footer class="wrap">Viajes en el tiempo · Bolillero de relatos</footer>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+var KEY='bolillero-viajes-v2';
+
+function defaults(){
+  return {
+    timer:true,
+    viajes:[
+      'El viaje a los 30 años.',
+      'El viaje en soledad.',
+      'El viaje con una pareja inolvidable.',
+      'El viaje en el que todo salió mal.',
+      'El primer gran viaje de tu vida.',
+      'El viaje con amigos más descontrolado.',
+      'El último viaje que hiciste.',
+      'El viaje en el que te enamoraste.',
+      'El viaje más improvisado de tu vida.',
+      'El viaje que repetirías con la experiencia que tenés hoy.'
+    ],
+    preguntas:[
+      'Si pudieras volver a ese lugar, pero con una identidad completamente falsa, ¿quién serías y qué locura harías?',
+      'Si ese lugar pudiera contar un secreto tuyo, ¿qué creés que revelaría?',
+      'Si tuvieras que volver a ese destino mañana, sin valija, sin plata y sin poder usar el celular, ¿cómo te las arreglarías?',
+      'Si tuvieras que quedarte a vivir ahí para siempre, ¿qué versión insólita de tu vida te imaginás?',
+      'Si pudieras borrar una sola regla de ese lugar durante 24 horas, ¿qué prohibición eliminarías y qué harías primero?',
+      '¿Qué personaje famoso, histórico o ficticio llevarías a ese destino para mostrarle algo que lo dejaría completamente desconcertado?',
+      'Si tu experiencia en ese lugar fuera una película, ¿qué título absurdo tendría y quién debería interpretarte?',
+      '¿Qué cosa insólita harías en ese lugar si tuvieras la certeza absoluta de que nunca volverías a encontrarte con nadie que conocés?',
+      'Si pudieras revivir un solo momento de ese viaje, pero cambiando una decisión que tomaste, ¿qué harías diferente?',
+      'Si ese destino te hubiera cambiado la vida sin que te dieras cuenta, ¿qué creés que te dejó y qué parte de vos se quedó ahí?'
+    ]
+  };
+}
+
+var cfg=defaults();
+var participants=[];
+var rondas=[];
+var Q={};
+
+var ESC={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+function h(s){return String(s).replace(/[&<>"']/g,function(c){return ESC[c];});}
+function $(id){return document.getElementById(id);}
+function shuffle(a){var r=a.slice();for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=r[i];r[i]=r[j];r[j]=t;}return r;}
+
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY); if(!raw) return;
+    var d=JSON.parse(raw); if(!d||!d.cfg) return;
+    cfg=Object.assign(defaults(),d.cfg);
+    if(Array.isArray(d.participants)) participants=d.participants;
+  }catch(e){}
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify({cfg:cfg,participants:participants}));}catch(e){}
+}
+
+var toastTimer=null;
+function notify(msg){
+  var t=$('toast'); t.textContent=msg; t.hidden=false;
+  clearTimeout(toastTimer); toastTimer=setTimeout(function(){t.hidden=true;},3200);
+}
+function confirmClick(btn,fn){
+  if(btn.dataset.armed==='1'){btn.dataset.armed='0';btn.textContent=btn.dataset.label;fn();return;}
+  btn.dataset.label=btn.textContent; btn.dataset.armed='1'; btn.textContent='Tocá de nuevo para confirmar';
+  setTimeout(function(){if(btn.dataset.armed==='1'){btn.dataset.armed='0';btn.textContent=btn.dataset.label;}},3500);
+}
+
+function applyTabs(){document.querySelector('[data-tab="timer"]').hidden=!cfg.timer;}
+function goTab(id){
+  if(id==='timer'&&!cfg.timer) id='setup';
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active',t.dataset.tab===id);});
+  $('tab-'+id).classList.add('active');
+  if(id==='config') renderConfig();
+  if(id==='sorteo') renderSorteo();
+}
+
+/* participantes */
+function addParticipants(){
+  var inp=$('nameInput');
+  inp.value.split(/[,\n]/).map(function(s){return s.trim();}).filter(Boolean).forEach(function(n){
+    if(participants.indexOf(n)<0) participants.push(n);
+  });
+  inp.value=''; inp.focus(); save(); renderChips(); updateCount();
+}
+function removeParticipant(i){
+  var n=participants[i]; participants.splice(i,1);
+  if(Q.p) Q.p=Q.p.filter(function(x){return x!==n;});
+  save(); renderChips(); updateCount();
+}
+function renderChips(){
+  $('chips').innerHTML=participants.map(function(p,i){
+    return '<span class="chip"><span>'+h(p)+'</span><button type="button" class="chip-x" aria-label="Quitar a '+h(p)+'" onclick="removeParticipant('+i+')">×</button></span>';
+  }).join('');
+}
+function updateCount(){
+  var n=participants.length;
+  $('countLabel').textContent=n+(n===1?' participante':' participantes');
+  $('statP').textContent=n;
+}
+
+/* sorteo: nadie ni ningún continente se repite hasta que pasaron todos */
+function drawDistinct(key,pool,count){
+  var q=(Q[key]||[]).filter(function(x){return pool.indexOf(x)>=0;});
+  var picked=[]; var before=null;
+  while(picked.length<count){
+    if(!q.length){
+      before=picked.slice();
+      q=shuffle(pool.filter(function(x){return picked.indexOf(x)<0;}));
+      if(!q.length) break;
+    }
+    var x=q.shift();
+    if(picked.indexOf(x)<0) picked.push(x);
+  }
+  if(before) q=q.concat(shuffle(before));
+  Q[key]=q;
+  return picked;
+}
+function clean(a){return a.map(function(x){return x.trim();}).filter(Boolean);}
+
+function sortear(){
+  if(!participants.length){notify('Primero agregá participantes en la pestaña Participantes.');return;}
+  var qs=clean(cfg.preguntas), vs=clean(cfg.viajes);
+  if(!vs.length||qs.length<2){notify('Faltan viajes o preguntas en Configuración.');return;}
+  var ps=drawDistinct('p',participants,1);
+  var asig=ps.map(function(p){return {persona:p,viaje:drawDistinct('v',vs,1)[0],preguntas:drawDistinct('q',qs,2)};});
+  rondas.push({id:rondas.length+1,asignaciones:asig});
+  renderSorteo();
+}
+function resetSorteo(){rondas=[];Q={};renderSorteo();}
+
+function renderSorteo(){
+  $('statR').textContent=rondas.length;
+  var vistos={}; rondas.forEach(function(r){r.asignaciones.forEach(function(a){vistos[a.persona]=1;});});
+  $('statC').textContent=Object.keys(vistos).length+'/'+participants.length;
+  $('statP').textContent=participants.length;
+  var area=$('resultArea');
+  if(!rondas.length){area.innerHTML='<div class="empty">Presioná "Sortear turno" para empezar.</div>';return;}
+  var html=rondaCard(rondas[rondas.length-1],true);
+  if(rondas.length>1){
+    html+='<details style="margin-top:8px"><summary style="cursor:pointer;font-size:13px;color:var(--ink2);padding:6px 0">Turnos anteriores ('+(rondas.length-1)+')</summary><div style="margin-top:10px">';
+    for(var i=rondas.length-2;i>=0;i--) html+=rondaCard(rondas[i],false);
+    html+='</div></details>';
+  }
+  area.innerHTML=html;
+}
+function rondaCard(r,destacada){
+  var html='<div class="rcard'+(destacada?' new':'')+'"><div class="rhead"><span class="rnum">Turno '+r.id+'</span></div>';
+  r.asignaciones.forEach(function(a){
+    html+='<div class="arow"><div class="acell"><div class="clabel">Participante</div><div class="cval persona">'+h(a.persona)+'</div></div>'
+      +'<div class="acell"><div class="clabel">Elegí un lugar según este viaje</div><div class="cval cont">'+h(a.viaje)+'</div></div>'
+      +'<div class="acell"><div class="clabel">Después respondé una de las dos</div><ul class="qs">'+a.preguntas.map(function(q){return '<li>'+h(q)+'</li>';}).join('')+'</ul></div></div>';
+  });
+  return html+'</div>';
+}
+
+/* configuración */
+function seg(key,opts){
+  return '<div class="seg" role="group">'+opts.map(function(o){
+    var on=cfg[key]===o.v;
+    return '<button type="button" class="seg-btn'+(on?' on':'')+'" aria-pressed="'+on+'" onclick="setCfg(\''+key+'\','+JSON.stringify(o.v)+')">'+o.l+'</button>';
+  }).join('')+'</div>';
+}
+function opt(t,d,control){
+  return '<div class="opt"><div><div class="opt-t">'+t+'</div><div class="opt-d">'+d+'</div></div>'+control+'</div>';
+}
+function setCfg(k,v){cfg[k]=v;save();renderConfig();applyTabs();renderSorteo();}
+
+function renderConfig(){
+  $('cfgDinamica').innerHTML=
+    opt('Temporizador','Muestra u oculta la pestaña del temporizador.',seg('timer',[{v:true,l:'Sí'},{v:false,l:'No'}]));
+  $('cfgViajes').innerHTML=cfg.viajes.map(function(v,i){
+    return '<div class="cfg-item"><input type="text" id="viaje-'+i+'" value="'+h(v)+'" aria-label="Tipo de viaje" onchange="renameViaje('+i+',this.value)"><button type="button" class="btn btn-danger btn-sm" onclick="removeViaje('+i+')">Eliminar</button></div>';
+  }).join('');
+  $('cfgPreguntas').innerHTML=cfg.preguntas.map(function(p,i){
+    return '<div class="cfg-item"><textarea id="preg-'+i+'" aria-label="Pregunta '+(i+1)+'" onchange="editPreg('+i+',this.value)">'+h(p)+'</textarea><button type="button" class="btn btn-danger btn-sm" onclick="removePreg('+i+')">Quitar</button></div>';
+  }).join('');
+}
+function renameViaje(i,v){v=v.trim(); if(!v){renderConfig();return;} cfg.viajes[i]=v; save();}
+function removeViaje(i){
+  if(cfg.viajes.length<=3){notify('Tienen que quedar al menos tres tipos de viaje.');return;}
+  cfg.viajes.splice(i,1); save(); renderConfig();
+}
+function addViaje(){
+  var inp=$('newViaje'); var v=inp.value.trim(); if(!v) return;
+  cfg.viajes.push(v); inp.value=''; save(); renderConfig(); $('newViaje').focus();
+}
+function editPreg(i,v){cfg.preguntas[i]=v; save();}
+function removePreg(i){
+  if(cfg.preguntas.length<=3){notify('Tienen que quedar al menos tres preguntas.');return;}
+  cfg.preguntas.splice(i,1); save(); renderConfig();
+}
+function addPreg(){
+  cfg.preguntas.push(''); save(); renderConfig();
+  var el=$('preg-'+(cfg.preguntas.length-1)); if(el) el.focus();
+}
+function restoreDefaults(){
+  cfg=defaults(); Q={}; save(); renderConfig(); applyTabs(); renderSorteo(); notify('Configuración restaurada.');
+}
+
+/* temporizador */
+var tS=60,tT=60,tI=null,tR=false;
+function fmtT(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function updT(){
+  var d=$('tdisp'); d.textContent=fmtT(tS); d.classList.toggle('warn',tS<=10);
+  var ring=$('timerRing');
+  ring.style.strokeDashoffset=(2*Math.PI*80)*(1-(tT>0?tS/tT:1));
+  ring.classList.toggle('warn',tS<=10);
+}
+function setTimer(s){clearInterval(tI);tR=false;tS=s;tT=s;$('btnTimer').textContent='Iniciar';updT();}
+function toggleTimer(){
+  if(tR){clearInterval(tI);tR=false;$('btnTimer').textContent='Reanudar';return;}
+  if(tS<=0) tS=tT;
+  tR=true; $('btnTimer').textContent='Pausar';
+  tI=setInterval(function(){
+    tS--; updT();
+    if(tS<=0){clearInterval(tI);tR=false;$('btnTimer').textContent='Iniciar';}
+  },1000);
+}
+function resetTimer(){clearInterval(tI);tR=false;tS=tT;$('btnTimer').textContent='Iniciar';updT();}
+
+$('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter') addParticipants();});
+load();
+applyTabs(); renderChips(); updateCount(); updT(); renderSorteo();
+</script>
+
+</body></html>
