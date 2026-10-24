@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseñar Aprendizaje con IA | Eleonora Segura</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Bebas Neue, Montserrat & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        bebas: ['"Bebas Neue"', 'sans-serif'],
+                        montserrat: ['"Montserrat"', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        flyer: {
+                            navy: '#0D2342',      /* Azul marino oscuro profundo */
+                            yellow: '#FFD200',    /* Amarillo marcador resaltador */
+                            yellowSoft: '#FFF6C5',/* Amarillo pastel suave */
+                            red: '#B82929',       /* Rojo sutil del sweater */
+                            cream: '#FAF8F3',     /* Fondo claro papel suave */
+                            cardBg: '#FFFFFF',
+                            text: '#1A202C',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FAF8F3;
+            color: #0D2342;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Efecto resaltador amarillo del flyer */
+        .highlight-yellow {
+            background: linear-gradient(100deg, rgba(255, 210, 0, 0.9) 0%, rgba(255, 224, 51, 0.9) 100%);
+            display: inline;
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+            box-shadow: 2px 2px 0px rgba(13, 35, 66, 0.1);
+        }
+
+        /* Cajas amarillas con bordes tipo pincel/sketch */
+        .banner-box-yellow {
+            background-color: #FFD200;
+            color: #0D2342;
+            box-shadow: 4px 4px 0px #0D2342;
+            border: 2px solid #0D2342;
+        }
+
+        .card-sketch {
+            background-color: #FFFFFF;
+            border: 2px solid #0D2342;
+            box-shadow: 4px 4px 0px #0D2342;
+        }
+
+        .postit-sketch {
+            background-color: #E8F1FF;
+            border: 2px solid #0D2342;
+            box-shadow: 3px 3px 0px #0D2342;
+        }
+
+        /* Subrayado estilo boceto */
+        .underline-marker {
+            position: relative;
+            display: inline-block;
+        }
+        .underline-marker::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 100%;
+            height: 6px;
+            background-color: #FFD200;
+            border-radius: 3px;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-flyer-yellow selection:text-flyer-navy min-h-screen flex flex-col justify-between">
+
+    <!-- Navbar sutil -->
+    <header class="sticky top-0 z-50 bg-[#FAF8F3]/90 backdrop-blur-md border-b-2 border-flyer-navy/10 py-3">
+        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+            <a href="#" class="font-bebas text-2xl tracking-wide text-flyer-navy flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-flyer-yellow border border-flyer-navy"></span>
+                <span>IA CON CRITERIO</span>
+            </a>
+            <a href="#interes" class="font-montserrat text-xs font-extrabold uppercase tracking-wider bg-flyer-yellow text-flyer-navy px-4 py-2 rounded border-2 border-flyer-navy hover:bg-yellow-400 transition-all shadow-[2px_2px_0px_#0D2342]">
+                Anotarme
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION (Estilo Flyer exacto) -->
+        <section class="pt-8 pb-12 md:pt-14 md:pb-20 px-6 relative overflow-hidden">
+            <div class="max-w-6xl mx-auto">
+                
+                <div class="grid lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Columna Izquierda: Textos e Impacto Tipográfico -->
+                    <div class="lg:col-span-7 space-y-5 text-left">
+                        
+                        <!-- Header Principal Estilo Flyer -->
+                        <div>
+                            <span class="font-bebas text-5xl sm:text-7xl lg:text-8xl text-flyer-navy leading-none tracking-tight block">
+                                IA CON CRITERIO
+                            </span>
+                            <p class="font-montserrat font-extrabold text-xl sm:text-2xl text-flyer-navy mt-1 tracking-tight">
+                                Transformá ideas, borradores y contenido en <br class="hidden sm:inline"/>
+                                <span class="underline-marker">experiencias de aprendizaje con propósito</span>
+                            </p>
+                        </div>
+
+                        <!-- Carga Visual Principal: Caja Amarilla con Texto Fuerte -->
+                        <div class="banner-box-yellow p-5 sm:p-6 rounded-xl my-4">
+                            <h1 class="font-bebas text-3xl sm:text-4xl md:text-5xl tracking-wide leading-none text-flyer-navy">
+                                DISEÑAR APRENDIZAJE CON IA
+                            </h1>
+                            <p class="font-montserrat font-bold text-sm sm:text-base text-flyer-navy mt-2 uppercase tracking-wide">
+                                NO ENSEÑO HERRAMIENTAS. ENSEÑO A DISEÑAR SIN PERDER TU CRITERIO PEDAGÓGICO.
+                            </p>
+                        </div>
+
+                        <!-- Bullets rápidos -->
+                        <div class="flex flex-wrap gap-3 font-montserrat text-xs font-bold text-flyer-navy">
+                            <span class="bg-white border border-flyer-navy px-3 py-1.5 rounded-md shadow-[2px_2px_0px_#0D2342]">
+                                ⚡ Taller intensivo
+                            </span>
+                            <span class="bg-white border border-flyer-navy px-3 py-1.5 rounded-md shadow-[2px_2px_0px_#0D2342]">
+                                💻 Modalidad híbrida
+                            </span>
+                            <span class="bg-white border border-flyer-navy px-3 py-1.5 rounded-md shadow-[2px_2px_0px_#0D2342]">
+                                👥 Cupos reducidos
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <!-- Columna Derecha: Foto de Eleonora + Mockups Estilo Flyer -->
+                    <div class="lg:col-span-5 relative flex justify-center items-center mt-6 lg:mt-0">
+                        <div class="relative w-full max-w-md">
+                            
+                            <!-- Foto Principal Eleonora con borde sketch -->
+                            <div class="relative z-10 rounded-2xl overflow-hidden border-4 border-flyer-navy shadow-[6px_6px_0px_#0D2342] bg-white">
+                                <img 
+                                    src="FOTO_ELE.jpg" 
+                                    alt="Eleonora Segura" 
+                                    class="w-full h-auto object-cover max-h-[420px]"
+                                    onerror="this.src='Flyer23y30taller.png'; this.onerror=null;"
+                                />
+                                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-flyer-navy/90 to-transparent p-4 text-white">
+                                    <p class="font-bebas text-2xl tracking-wide leading-none">Eleonora Segura</p>
+                                    <p class="font-montserrat text-xs font-medium text-flyer-yellow">Especialista en EdTech & IA • M.Ed. Harvard</p>
+                                </div>
+                            </div>
+
+                            <!-- Mockup flotante estilo Post-it/Laptop del flyer -->
+                            <div class="absolute -bottom-6 -left-6 z-20 postit-sketch p-3 rounded-lg max-w-[210px] hidden sm:block">
+                                <div class="flex items-center gap-1.5 mb-1 text-xs font-bold text-flyer-navy">
+                                    <span class="w-2 h-2 rounded-full bg-blue-600"></span> Diálogo con la IA
+                                </div>
+                                <p class="font-sans text-[11px] text-slate-800 italic leading-snug">
+                                    "¿Qué da por obvio este contenido? ¿Cómo reescribirlo desde un enfoque narrativo?"
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: ¿PARA QUIÉN ES ESTO? (3 Columnas Rápidas) -->
+        <section class="py-12 bg-white border-y-2 border-flyer-navy">
+            <div class="max-w-5xl mx-auto px-6">
+                
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <h2 class="font-bebas text-4xl sm:text-5xl text-flyer-navy tracking-wide">
+                        ¿PARA QUIÉN ES ESTE TALLER?
+                    </h2>
+                    <p class="font-montserrat font-medium text-sm text-slate-600">
+                        Para docentes, facilitadores, diseñadores de contenido y formadores que ya usan IA —o quieren empezar— y sienten que:
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="card-sketch p-6 rounded-xl relative">
+                        <span class="font-bebas text-3xl text-flyer-red block mb-1">01</span>
+                        <h3 class="font-montserrat font-bold text-base text-flyer-navy mb-2">Falta de identidad</h3>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Sentís que a veces el resultado generado por la herramienta simplemente <span class="highlight-yellow font-medium">no suena a vos</span>.
+                        </p>
+                    </div>
+
+                    <div class="card-sketch p-6 rounded-xl relative">
+                        <span class="font-bebas text-3xl text-flyer-red block mb-1">02</span>
+                        <h3 class="font-montserrat font-bold text-base text-flyer-navy mb-2">Falta de certeza</h3>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            No tenés en claro <span class="highlight-yellow font-medium">cuándo confiar</span> en lo que la IA te devuelve y cuándo descartarlo.
+                        </p>
+                    </div>
+
+                    <div class="card-sketch p-6 rounded-xl relative">
+                        <span class="font-bebas text-3xl text-flyer-red block mb-1">03</span>
+                        <h3 class="font-montserrat font-bold text-base text-flyer-navy mb-2">Velocidad sin dirección</h3>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Acelerás la producción cuando lo que realmente necesitás es <span class="highlight-yellow font-medium">detenerte a pensar</span>.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: PROGRAMA EN 4 MÓDULOS (Cuadrícula Concisa 2x2) -->
+        <section class="py-14 bg-[#FAF8F3]">
+            <div class="max-w-5xl mx-auto px-6">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                    <div>
+                        <span class="font-montserrat font-extrabold text-xs text-flyer-navy uppercase tracking-widest bg-flyer-yellow px-2.5 py-1 rounded border border-flyer-navy">
+                            Estructura de Trabajo
+                        </span>
+                        <h2 class="font-bebas text-4xl sm:text-5xl text-flyer-navy tracking-wide mt-2">
+                            LOS 4 MÓDULOS DEL TALLER
+                        </h2>
+                    </div>
+                    <p class="font-montserrat text-xs font-semibold text-slate-600 max-w-xs">
+                        * Trabajarás con tu propio tema o material como laboratorio durante toda la experiencia.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    
+                    <!-- Módulo 1 -->
+                    <div class="card-sketch p-6 rounded-xl hover:translate-x-1 hover:-translate-y-1 transition-transform">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bebas text-2xl text-flyer-navy bg-flyer-yellowSoft border border-flyer-navy px-3 py-0.5 rounded">MÓDULO 1</span>
+                        </div>
+                        <h3 class="font-montserrat font-bold text-lg text-flyer-navy mb-2">
+                            Pensar con IA, no correr detrás de ella
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                            Qué hace realmente la IA, errores comunes iniciales y cómo construir pedidos (prompts) con sentido pedagógico. La base necesaria antes de usar herramientas.
+                        </p>
+                    </div>
+
+                    <!-- Módulo 2 -->
+                    <div class="card-sketch p-6 rounded-xl hover:translate-x-1 hover:-translate-y-1 transition-transform">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bebas text-2xl text-flyer-navy bg-flyer-yellowSoft border border-flyer-navy px-3 py-0.5 rounded">MÓDULO 2</span>
+                        </div>
+                        <h3 class="font-montserrat font-bold text-lg text-flyer-navy mb-2">
+                            Diseñar con IA desde lo pedagógico
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                            De la idea a una estructura de aprendizaje real. Casos, actividades y secuencias usando tu propio material de trabajo, no ejemplos ajenos.
+                        </p>
+                    </div>
+
+                    <!-- Módulo 3 -->
+                    <div class="card-sketch p-6 rounded-xl hover:translate-x-1 hover:-translate-y-1 transition-transform">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bebas text-2xl text-flyer-navy bg-flyer-yellowSoft border border-flyer-navy px-3 py-0.5 rounded">MÓDULO 3</span>
+                        </div>
+                        <h3 class="font-montserrat font-bold text-lg text-flyer-navy mb-2">
+                            Refinar hasta que sea tuyo
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                            El primer resultado nunca es el final. Trabajamos la iteración, tu voz propia y la diferencia clave entre lo que la IA propone y lo que vos decidís conservar.
+                        </p>
+                    </div>
+
+                    <!-- Módulo 4 -->
+                    <div class="card-sketch p-6 rounded-xl hover:translate-x-1 hover:-translate-y-1 transition-transform">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="font-bebas text-2xl text-flyer-navy bg-flyer-yellowSoft border border-flyer-navy px-3 py-0.5 rounded">MÓDULO 4</span>
+                        </div>
+                        <h3 class="font-montserrat font-bold text-lg text-flyer-navy mb-2">
+                            Decidir qué IA usar y cuándo no usarla
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                            Comparación de herramientas, límites éticos y criterios de selección. Porque el "cuándo no" es tan determinante como el "cómo sí".
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: CITA DESTACADA / DIFERENCIAL -->
+        <section class="py-12 bg-flyer-navy text-white">
+            <div class="max-w-4xl mx-auto px-6 text-center space-y-4">
+                <span class="font-bebas text-2xl text-flyer-yellow tracking-widest uppercase">LA DIFERENCIA ES DE CRITERIO</span>
+                <p class="font-montserrat font-bold text-xl sm:text-2xl lg:text-3xl leading-snug">
+                    "Hay cientos de tutoriales que te enseñan a usar IA. Este taller te enseña a <span class="text-flyer-yellow underline">pensar con ella</span> y a saber cuándo no usarla."
+                </p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: FACILITADORA + LISTA DE INTERÉS (Cierre Unificado) -->
+        <section id="interes" class="py-16 bg-white border-t-2 border-flyer-navy">
+            <div class="max-w-4xl mx-auto px-6">
+                
+                <div class="grid md:grid-cols-12 gap-8 items-center bg-[#FAF8F3] p-8 rounded-2xl border-2 border-flyer-navy shadow-[6px_6px_0px_#0D2342]">
+                    
+                    <!-- Bio Eleonora compacta -->
+                    <div class="md:col-span-5 space-y-3 border-b md:border-b-0 md:border-r-2 border-flyer-navy/20 pb-6 md:pb-0 md:pr-6">
+                        <div class="inline-block bg-flyer-yellow px-3 py-1 font-bebas text-lg text-flyer-navy rounded border border-flyer-navy">
+                            FACILITA EL TALLER
+                        </div>
+                        <h3 class="font-bebas text-3xl text-flyer-navy tracking-wide">Eleonora Segura</h3>
+                        <ul class="font-montserrat text-xs text-slate-700 space-y-2 font-medium">
+                            <li>🎓 Licenciada en Sistemas.</li>
+                            <li>🏛️ Maestría en Tecnología Educativa, <strong>Harvard</strong>.</li>
+                            <li>💼 30 años en capacitación y desarrollo.</li>
+                            <li>📚 Profesora de Aprendizaje Digital en la <strong>UCA</strong>.</li>
+                        </ul>
+                        <p class="text-xs text-slate-600 italic pt-2">
+                            "Trabajo en la intersección de tecnología educativa y ética de IA."
+                        </p>
+                    </div>
+
+                    <!-- Formulario Lista de Espera -->
+                    <div class="md:col-span-7 space-y-4">
+                        <h4 class="font-bebas text-3xl text-flyer-navy tracking-wide">
+                            QUIERO ANOTARME EN LA LISTA DE INTERÉS
+                        </h4>
+                        <p class="font-montserrat text-xs text-slate-600">
+                            El taller no tiene fecha confirmada aún. Dejá tu mail para enterarte primero cuando abramos las inscripciones.
+                        </p>
+
+                        <form id="emailForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <input 
+                                    type="email" 
+                                    id="emailInput" 
+                                    required 
+                                    placeholder="Ingresá tu correo electrónico"
+                                    class="px-4 py-3 rounded-lg border-2 border-flyer-navy text-sm font-sans w-full focus:outline-none focus:ring-2 focus:ring-flyer-yellow"
+                                >
+                                <button 
+                                    type="submit" 
+                                    class="font-montserrat font-extrabold text-xs uppercase tracking-wider bg-flyer-yellow text-flyer-navy px-6 py-3 rounded-lg border-2 border-flyer-navy hover:bg-yellow-400 transition-all shadow-[3px_3px_0px_#0D2342] whitespace-nowrap"
+                                >
+                                    Quiero Anotarme
+                                </button>
+                            </div>
+                            <p class="text-[11px] text-slate-500">
+                                🔒 Cero spam. Solo un mensaje directo cuando se confirme la fecha.
+                            </p>
+                        </form>
+
+                        <div id="successMessage" class="hidden p-4 bg-emerald-100 border-2 border-emerald-800 rounded-lg text-center">
+                            <p class="font-montserrat font-bold text-sm text-emerald-900">¡Anotado correctamente!</p>
+                            <p class="text-xs text-emerald-800 mt-1">Te avisaremos con prioridad cuando se definan las fechas.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Contacto directo -->
+                <div class="mt-8 text-center text-xs font-montserrat font-bold text-flyer-navy space-x-2">
+                    <span>¿Tenés dudas? Escribime a:</span>
+                    <a href="mailto:elesegura@post.harvard.edu" class="underline hover:text-flyer-red">elesegura@post.harvard.edu</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-flyer-navy text-white py-6 text-center text-xs font-montserrat border-t-2 border-flyer-navy">
+        <p>© 2026 Eleonora Segura — Diseñar aprendizaje con IA. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('emailForm').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
