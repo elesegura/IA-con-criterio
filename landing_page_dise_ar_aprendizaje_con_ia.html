@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseñar aprendizaje con IA | Taller de IA con criterio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Newsreader"', 'serif'],
+                    },
+                    colors: {
+                        cream: {
+                            50: '#FAF9F6',
+                            100: '#F4F1EA',
+                            200: '#E8E2D5',
+                        },
+                        brand: {
+                            indigo: '#4F46E5',
+                            indigoSoft: '#EEF2FF',
+                            violet: '#7C3AED',
+                            violetSoft: '#F3E8FF',
+                            text: '#1E293B',
+                            muted: '#64748B',
+                            border: '#E2E8F0',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF9F6;
+            color: #1E293B;
+        }
+        .serif-quote {
+            font-family: 'Newsreader', serif;
+        }
+        .glow-soft {
+            box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.08);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-100 selection:text-indigo-900 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation Minimal -->
+    <header class="sticky top-0 z-50 bg-stone-50/80 backdrop-blur-md border-b border-stone-200/60 transition-all">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="text-lg font-bold tracking-tight text-slate-800 flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-indigo-600 inline-block"></span>
+                <span>Diseñar aprendizaje <span class="font-normal text-slate-500">con IA</span></span>
+            </a>
+            <a href="#interes" class="text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors hidden sm:block">
+                Anotarme en la lista →
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Hero Header -->
+        <section class="relative pt-16 pb-20 md:pt-28 md:pb-32 overflow-hidden">
+            <!-- Glow background accents -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-tr from-indigo-100/60 to-purple-100/50 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold tracking-wide uppercase mb-8">
+                    <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+                    Taller de IA con criterio
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-6">
+                    Diseñar aprendizaje <br class="hidden sm:inline"/><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">con Inteligencia Artificial</span>
+                </h1>
+
+                <p class="serif-quote italic text-2xl md:text-3xl text-slate-700 max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
+                    “No enseño herramientas de IA. Enseño a diseñar aprendizaje con IA sin perder criterio pedagógico.”
+                </p>
+
+                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#interes" class="w-full sm:w-auto inline-flex items-center justify-center px-7 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5">
+                        Anotarme en la lista de interés
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Sección ¿Para quién es esto? -->
+        <section class="py-20 bg-white border-y border-stone-200/80 relative">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="max-w-2xl mb-12">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">¿Para quién es esto?</h2>
+                    <p class="text-2xl md:text-3xl font-bold text-slate-900 leading-snug">
+                        Dirigido a docentes, facilitadores, diseñadores de contenido y profesionales de la formación.
+                    </p>
+                    <p class="mt-4 text-slate-600 text-lg">
+                        Para quienes ya usan IA —o quieren empezar— y sienten que algo falta.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-12">
+                    <div class="p-6 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-indigo-200 transition-colors">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">01</div>
+                        <p class="text-slate-800 font-medium">Sienten que a veces el resultado de la IA simplemente <span class="text-slate-900 font-semibold">no suena a ellos</span>.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-indigo-200 transition-colors">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">02</div>
+                        <p class="text-slate-800 font-medium">No están seguros de <span class="text-slate-900 font-semibold">cuándo confiar</span> en lo que la herramienta devuelve.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-indigo-200 transition-colors">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">03</div>
+                        <p class="text-slate-800 font-medium">Sienten que aceleran la producción cuando lo que necesitan es <span class="text-slate-900 font-semibold">detenerse a pensar</span>.</p>
+                    </div>
+                </div>
+
+                <div class="p-6 md:p-8 rounded-2xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100/80 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                        Este taller existe exactamente para eso.
+                    </p>
+                    <a href="#interes" class="inline-flex items-center text-sm font-bold text-indigo-600 hover:text-indigo-800 gap-1 whitespace-nowrap">
+                        Quiero sumar criterio →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Sección Qué vas a construir -->
+        <section class="py-20 bg-stone-50">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">Metodología práctica</h2>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900">Un fin de semana. Cuatro módulos. Tu propio tema como laboratorio.</h3>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-3">Aprender haciendo, en simultáneo</h4>
+                        <p class="text-slate-600 leading-relaxed">
+                            Cada módulo combina demostración en vivo y práctica simultánea. No mirás cómo se hace para después probar: lo hacés en el momento, con tu propio material, en tu máquina.
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 mb-3">Tu Documento de Trabajo final</h4>
+                        <p class="text-slate-600 leading-relaxed">
+                            Te llevás un documento de trabajo con todo lo que creaste durante el taller: tus prompts, tus diseños y tu criterio propio para seguir sola después.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Sección Los cuatro módulos -->
+        <section class="py-20 bg-white border-t border-stone-200/80">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">Estructura del programa</h2>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900">Los cuatro módulos del taller</h3>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Módulo 1 -->
+                    <div class="p-8 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-indigo-300 hover:shadow-lg transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold tracking-wider uppercase px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full">Módulo 1</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-slate-900 mb-3">Pensar con IA, no correr detrás de ella</h4>
+                        <p class="text-slate-600 leading-relaxed">
+                            Qué hace realmente la IA, qué errores cometen casi todos al principio y cómo construir un pedido que devuelva algo útil. La base que nadie te enseña antes de darte las herramientas.
+                        </p>
+                    </div>
+
+                    <!-- Módulo 2 -->
+                    <div class="p-8 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-indigo-300 hover:shadow-lg transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold tracking-wider uppercase px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full">Módulo 2</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-slate-900 mb-3">Diseñar con IA desde lo pedagógico</h4>
+                        <p class="text-slate-600 leading-relaxed">
+                            Cómo pasar de una idea a una estructura de aprendizaje real. Actividades, casos, rompehielos, nombres de curso — con tu área de trabajo como material, no con ejemplos ajenos.
+                        </p>
+                    </div>
+
+                    <!-- Módulo 3 -->
+                    <div class="p-8 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-indigo-300 hover:shadow-lg transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold tracking-wider uppercase px-3 py-1 bg-purple-100 text-purple-700 rounded-full">Módulo 3</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-slate-900 mb-3">Refinar hasta que sea tuyo</h4>
+                        <p class="text-slate-600 leading-relaxed">
+                            El primer resultado de la IA nunca es el final. Este módulo trabaja la iteración, el estilo propio y la diferencia entre lo que la IA propone y lo que vos decidís conservar.
+                        </p>
+                    </div>
+
+                    <!-- Módulo 4 -->
+                    <div class="p-8 rounded-2xl bg-stone-50 border border-stone-200/80 hover:border-indigo-300 hover:shadow-lg transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold tracking-wider uppercase px-3 py-1 bg-purple-100 text-purple-700 rounded-full">Módulo 4</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-slate-900 mb-3">Decidir qué IA usar y cuándo no usarla</h4>
+                        <p class="text-slate-600 leading-relaxed">
+                            Comparación real de herramientas, límites concretos y las preguntas éticas que vale hacerse antes de integrar IA a tu práctica. Porque el "cuándo no" es tan importante como el "cómo sí".
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Sección Lo que hace diferente a este taller -->
+        <section class="py-20 bg-indigo-50/60 border-y border-indigo-100">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="bg-white p-8 md:p-12 rounded-3xl border border-indigo-100 shadow-sm relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-50 rounded-full blur-2xl -z-0"></div>
+                    
+                    <div class="relative z-10 space-y-6">
+                        <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-600">Diferencial pedagógico</h2>
+                        
+                        <p class="text-2xl md:text-3xl font-bold text-slate-900 leading-snug">
+                            "Hay cientos de tutoriales que te enseñan a usar la IA. Este taller te enseña a pensar con ella — y a saber cuándo no usarla."
+                        </p>
+
+                        <div class="pt-4 border-t border-slate-100 grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold text-slate-900 mb-2">Criterio sobre técnica</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    La diferencia principal no es técnica, es de criterio. No se trata de aprender comandos de memoria, sino de desarrollar criterio conceptual.
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 mb-2">Preguntas filosóficas</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    Cada módulo abre con una pregunta filosófica. Lo que creás con IA refleja lo que pensás sobre el aprendizaje, y vale la pena hacerlo visible.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Sección Formato -->
+        <section class="py-20 bg-stone-50">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">Detalles de la experiencia</h2>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900">Formato e Intensidad</h3>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-6 bg-white rounded-2xl border border-stone-200/80">
+                        <div class="text-indigo-600 mb-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-2">Fin de semana</h4>
+                        <p class="text-slate-600 text-sm">Taller intensivo concentrado para avanzar con foco y sin interrupciones.</p>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-2xl border border-stone-200/80">
+                        <div class="text-indigo-600 mb-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-2">Modalidad híbrida</h4>
+                        <p class="text-slate-600 text-sm">Contenido asincrónico previo para nivelar + encuentros vivos en directo.</p>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-2xl border border-stone-200/80">
+                        <div class="text-indigo-600 mb-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-2">Cupo reducido</h4>
+                        <p class="text-slate-600 text-sm">Para garantizar práctica real, retroalimentación personalizada e intercambio profundo.</p>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-2xl border border-stone-200/80">
+                        <div class="text-indigo-600 mb-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-2">Práctica simultánea</h4>
+                        <p class="text-slate-600 text-sm">Diseñás y aplicás sobre tus propios materiales durante toda la sesión.</p>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-2xl border border-stone-200/80 sm:col-span-2 lg:col-span-2">
+                        <div class="text-indigo-600 mb-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <h4 class="font-bold text-slate-900 mb-2">Documento de Trabajo personal</h4>
+                        <p class="text-slate-600 text-sm">Un artefacto práctico que te acompaña durante la formación y queda como guía de consulta permanente.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Sección Quién lo facilita -->
+        <section class="py-20 bg-white border-t border-stone-200/80">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="grid md:grid-cols-12 gap-10 items-center">
+                    <div class="md:col-span-4 flex justify-center">
+                        <div class="relative">
+                            <div class="w-48 h-48 md:w-56 md:h-56 rounded-3xl bg-slate-200 overflow-hidden border-4 border-white shadow-xl">
+                                <img src="https://placehold.co/400x400/e2e8f0/1e293b?text=Eleonora+Segura" alt="Eleonora Segura" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/e2e8f0/1e293b?text=Eleonora+Segura'">
+                            </div>
+                            <div class="absolute -bottom-3 -right-3 bg-indigo-600 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow">
+                                Facilitadora
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-8 space-y-4">
+                        <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-600">Quién facilita el taller</h2>
+                        <h3 class="text-3xl font-extrabold text-slate-900">Eleonora Segura</h3>
+                        
+                        <ul class="space-y-2 text-slate-600 text-sm md:text-base">
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-600 font-bold">•</span> Licenciada en Sistemas.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-600 font-bold">•</span> Maestría en Tecnología Educativa, Harvard.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-600 font-bold">•</span> 30 años de experiencia en capacitación y desarrollo profesional.
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-600 font-bold">•</span> Profesora de Aprendizaje Digital en la Universidad Católica Argentina (UCA).
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-indigo-600 font-bold">•</span> Especialista en e-learning y diseño de experiencias de aprendizaje con IA.
+                            </li>
+                        </ul>
+
+                        <div class="pt-4">
+                            <blockquote class="p-4 rounded-xl bg-stone-50 border-l-4 border-indigo-600 text-slate-700 italic text-sm">
+                                “Trabajo en la intersección de tecnología educativa y ética de IA — porque ninguna de las dos tiene sentido sin la otra.”
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Formulario / Lista de Interés (CTA Final) -->
+        <section id="interes" class="py-20 bg-stone-900 text-white relative overflow-hidden">
+            <div class="max-w-3xl mx-auto px-6 relative z-10 text-center">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+                    Quiero anotarme en la lista de interés
+                </h2>
+                <p class="text-stone-300 text-base md:text-lg mb-8 max-w-xl mx-auto">
+                    El taller todavía no tiene fecha confirmada. Si querés ser de las primeras personas en saber cuándo abre la inscripción, dejá tu email acá.
+                </p>
+
+                <!-- Formulario Interactivo -->
+                <form id="emailForm" onsubmit="handleFormSubmit(event)" class="max-w-md mx-auto space-y-4">
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input 
+                            type="email" 
+                            id="emailInput"
+                            required 
+                            placeholder="tu.email@ejemplo.com" 
+                            class="px-4 py-3.5 rounded-xl bg-stone-800 border border-stone-700 text-white placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-grow"
+                        >
+                        <button 
+                            type="submit" 
+                            class="px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-white transition-all shadow-lg shadow-indigo-600/30 whitespace-nowrap"
+                        >
+                            Dejar mi mail
+                        </button>
+                    </div>
+                    <p class="text-xs text-stone-400">
+                        🔒 Nada de spam. Solo un mensaje cuando la fecha esté confirmada.
+                    </p>
+                </form>
+
+                <!-- Mensaje de éxito oculto por defecto -->
+                <div id="successMessage" class="hidden max-w-md mx-auto p-6 bg-stone-800 border border-indigo-500/50 rounded-2xl text-center">
+                    <div class="w-12 h-12 bg-indigo-500/20 text-indigo-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">¡Anotado con éxito!</h3>
+                    <p class="text-stone-300 text-sm">Te avisaremos apenas abramos la inscripción de la próxima cohorte.</p>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-stone-800 text-stone-400 text-sm flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <span>¿Tenés preguntas sobre el taller?</span>
+                    <div class="flex items-center gap-4 text-indigo-400">
+                        <a href="mailto:eleonora@ejemplo.com" class="hover:underline">eleonora@ejemplo.com</a>
+                        <span>•</span>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" class="hover:underline">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-950 text-stone-500 py-6 text-center text-xs border-t border-stone-900">
+        <p>© 2026 Eleonora Segura — Diseñar aprendizaje con IA. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Scripts interactivos simples -->
+    <script>
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('emailForm');
+            const success = document.getElementById('successMessage');
+            
+            // Simulación de envío exitoso
+            form.classList.add('hidden');
+            success.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
