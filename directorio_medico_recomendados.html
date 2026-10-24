@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio de Médicos Recomendados</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        },
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full text-slate-800 antialiased font-sans flex flex-col selection:bg-teal-500 selection:text-white">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-teal-700 via-medical-600 to-medical-700 text-white shadow-lg sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2.5 bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
+                        <i class="fa-solid fa-user-doctor text-2xl sm:text-3xl text-teal-200"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Directorio Médico Interactivo</h1>
+                        <p class="text-xs sm:text-sm text-teal-100/90 font-light">Guía de especialistas y profesionales recomendados</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-2 self-end md:self-auto">
+                    <button onclick="openAddModal()" class="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white font-medium text-sm px-3.5 py-2 rounded-lg shadow-sm transition-all duration-150 active:scale-95">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                        <span>Agregar Médico</span>
+                    </button>
+                    
+                    <!-- Dropdown for Data Management -->
+                    <div class="relative inline-block text-left">
+                        <button onclick="toggleDataMenu()" id="dataMenuBtn" class="p-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors border border-white/20" title="Gestión de Datos">
+                            <i class="fa-solid fa-arrows-rotate text-sm"></i>
+                        </button>
+                        <div id="dataMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 z-50 text-slate-700 py-1 text-sm">
+                            <button onclick="exportJSON()" class="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2">
+                                <i class="fa-solid fa-file-code text-teal-600"></i> Exportar JSON
+                            </button>
+                            <button onclick="exportCSV()" class="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2">
+                                <i class="fa-solid fa-file-csv text-green-600"></i> Exportar a Excel/CSV
+                            </button>
+                            <label class="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2 cursor-pointer">
+                                <i class="fa-solid fa-file-import text-medical-600"></i> Importar Backup
+                                <input type="file" id="importFileInput" onchange="importJSON(event)" class="hidden" accept=".json">
+                            </label>
+                            <hr class="my-1 border-slate-100">
+                            <button onclick="resetData()" class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 flex items-center gap-2">
+                                <i class="fa-solid fa-rotate-left"></i> Restaurar Lista Original
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- Search & Filters Panel -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sm:p-5">
+            <div class="space-y-4">
+                
+                <!-- Main Search Bar -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                    </div>
+                    <input type="text" id="searchInput" oninput="applyFilters()" 
+                           placeholder="Buscar por nombre, especialidad, clínica, barrio o nota..." 
+                           class="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white transition-all">
+                    <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Dropdowns & Toggles Container -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    
+                    <!-- Specialty Filter -->
+                    <div>
+                        <label for="specialtyFilter" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Especialidad</label>
+                        <select id="specialtyFilter" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs sm:text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white">
+                            <option value="">Todas las Especialidades</option>
+                        </select>
+                    </div>
+
+                    <!-- Zone Filter -->
+                    <div>
+                        <label for="zoneFilter" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Barrio / Zona</label>
+                        <select id="zoneFilter" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs sm:text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white">
+                            <option value="">Todas las Zonas</option>
+                        </select>
+                    </div>
+
+                    <!-- Institution Filter -->
+                    <div>
+                        <label for="institutionFilter" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Lugar / Institución</label>
+                        <select id="institutionFilter" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs sm:text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white">
+                            <option value="">Cualquier Lugar / Sanatorio</option>
+                        </select>
+                    </div>
+
+                    <!-- Filter Toggles -->
+                    <div class="flex items-end gap-2 pt-2 sm:pt-0">
+                        <!-- PAMI Toggle -->
+                        <button id="pamiToggle" onclick="toggleFilter('pami')" 
+                                class="flex-1 py-2 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 text-xs sm:text-sm font-medium transition-all flex items-center justify-center gap-1.5 select-none">
+                            <i class="fa-solid fa-id-card"></i>
+                            <span>PAMI</span>
+                        </button>
+
+                        <!-- Domicilio Toggle -->
+                        <button id="domicilioToggle" onclick="toggleFilter('domicilio')" 
+                                class="flex-1 py-2 px-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 text-xs sm:text-sm font-medium transition-all flex items-center justify-center gap-1.5 select-none">
+                            <i class="fa-solid fa-house-medical"></i>
+                            <span>Domicilio</span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Active Filters & Counter Row -->
+                <div class="flex flex-wrap items-center justify-between border-t border-slate-100 pt-3 gap-2 text-xs sm:text-sm text-slate-500">
+                    <div id="resultsCount" class="font-medium text-slate-700">
+                        Cargando catálogo...
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="resetAllFilters()" class="text-teal-600 hover:text-teal-700 font-medium hover:underline flex items-center gap-1">
+                            <i class="fa-solid fa-rotate-left text-xs"></i> Limpiar Filtros
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Doctor Cards Grid -->
+        <section id="doctorsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Cards rendered dynamically via JS -->
+        </section>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 px-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm">
+            <div class="w-16 h-16 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-user-slash"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 mb-1">No se encontraron profesionales</h3>
+            <p class="text-slate-500 text-sm max-w-md mx-auto mb-6">Prueba cambiando la búsqueda o quitando algunos de los filtros seleccionados.</p>
+            <button onclick="resetAllFilters()" class="bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                Restablecer Filtros
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Modal: Add / Edit Doctor -->
+    <div id="doctorModal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 w-full max-w-xl overflow-hidden my-8 transform transition-all">
+            
+            <div class="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                <h3 id="modalTitle" class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-teal-600"></i> Agregar Nuevo Profesional
+                </h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="doctorForm" onsubmit="saveDoctor(event)" class="p-6 space-y-4 max-h-[80vh] overflow-y-auto custom-scrollbar">
+                <input type="hidden" id="doctorId">
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nombre y Apellido *</label>
+                    <input type="text" id="formName" required placeholder="Ej. Dr. Juan Pérez" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Especialidad principal *</label>
+                        <input type="text" id="formSpecialty" required placeholder="Ej. Neurología, Kinesiología" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Barrio / Zona</label>
+                        <input type="text" id="formZone" placeholder="Ej. Recoleta, San Isidro, CABA" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Lugar de Atención / Sanatorio</label>
+                    <input type="text" id="formLocation" placeholder="Ej. Hospital Italiano, Fleni, Consultorio Privado" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Teléfono principal</label>
+                        <input type="text" id="formPhone" placeholder="Ej. 54 11 4959-0300" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Teléfono secundario / Whatsapp</label>
+                        <input type="text" id="formPhone2" placeholder="Ej. 54 9 11 6159-5361" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Dirección / Dirección Web</label>
+                    <input type="text" id="formAddress" placeholder="Ej. Av. Santa Fe 2245 1° o www.sitio.com" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white outline-none">
+                </div>
+
+                <!-- Toggles / Checks -->
+                <div class="flex flex-wrap gap-4 py-2 border-y border-slate-100">
+                    <label class="inline-flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
+                        <input type="checkbox" id="formPami" class="w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500">
+                        <span>Acepta PAMI</span>
+                    </label>
+                    <label class="inline-flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
+                        <input type="checkbox" id="formDomicilio" class="w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500">
+                        <span>Atiende a Domicilio</span>
+                    </label>
+                    <label class="inline-flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
+                        <input type="checkbox" id="formVirtual" class="w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500">
+                        <span>Consultas Virtuales</span>
+                    </label>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Notas / Recomendaciones</label>
+                    <textarea id="formNotes" rows="3" placeholder="Información de experiencia, referencias, subespecialidades..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 focus:bg-white outline-none"></textarea>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-200 hover:bg-slate-50 rounded-lg text-slate-600 text-sm font-medium transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-medium shadow-sm transition-colors">
+                        Guardar Médico
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-800 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 text-sm">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-teal-400"></i>
+        <span id="toastMsg">Mensaje de notificación</span>
+    </div>
+
+    <!-- INITIAL PRELOADED DATA & APPLICATION SCRIPT -->
+    <script>
+        const INITIAL_DOCTORS = [
+            {
+                id: "1",
+                name: "Dr. Sotelo, Claudio",
+                specialty: "Clínicos",
+                zone: "Don Torcuato, Tigre",
+                location: "Sanatorio Las Lomas",
+                phone: "54 11 5755-6854",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: true,
+                virtual: true,
+                notes: "Auditoría. Médico de planta del Sanatorio Las Lomas. Consultas médicas: virtuales, domicilios y consultorio."
+            },
+            {
+                id: "2",
+                name: "Marcelo Pocovi",
+                specialty: "Dermatología",
+                zone: "CABA / AMBA",
+                location: "Consultorio Privado",
+                phone: "54 11 4543-4807",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Especialista en dermatología clínica y quirúrgica."
+            },
+            {
+                id: "3",
+                name: "Bersa Rx",
+                specialty: "Ecografía - Radiografía",
+                zone: "CABA / AMBA",
+                location: "A Domicilio",
+                phone: "",
+                phone2: "",
+                address: "www.bersarx.com",
+                pami: false,
+                domicilio: true,
+                virtual: false,
+                notes: "Radiografías digitales, colocación de sonda nasogástrica y análisis clínicos sin traslado. Atienden a domicilio."
+            },
+            {
+                id: "4",
+                name: "Dra. Giber, Fabiana",
+                specialty: "Geriatría",
+                zone: "Caballito, CABA",
+                location: "Hospital Italiano",
+                phone: "54 11 4959-0300",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Medicina interna. Geriatría. Jefa del Área Evaluación de Caídas en Adulto Mayor. Muy recomendada; años de experiencia."
+            },
+            {
+                id: "5",
+                name: "Matías Manzotti",
+                specialty: "Geriatría",
+                zone: "Recoleta",
+                location: "Hospital Alemán",
+                phone: "",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: true,
+                virtual: false,
+                notes: "Jefe de Geriatría y Gerontología del Hospital Alemán, Presidente de la Asociación Argentina de Geriatría y Gerontología. Atiende a varios padres a domicilio, en su consultorio privado o en el Hosp. Alemán."
+            },
+            {
+                id: "6",
+                name: "Lic. Kindsvater, Maria Josefina",
+                specialty: "Kinesiología",
+                zone: "CABA / Zona Norte",
+                location: "Atención Privada",
+                phone: "54 11 2298-3878",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Kinesiología, fisioterapia y coaching ontológico."
+            },
+            {
+                id: "7",
+                name: "Lic. Sandra Caballero",
+                specialty: "Kinesiología",
+                zone: "Zona Norte",
+                location: "A Domicilio",
+                phone: "54 9 11 6613-7282",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: true,
+                virtual: false,
+                notes: "Vive en Escobar y atiende a domicilio desde Escobar hasta Nordelta."
+            },
+            {
+                id: "8",
+                name: "Lic. Carolina Marchuk",
+                specialty: "Kinesiología",
+                zone: "Caballito, CABA",
+                location: "Centro Kinésico Osteopático",
+                phone: "54 11 5340-6636",
+                phone2: "54 11 2008-8966",
+                address: "Av. Rivadavia 4447, 2º Piso",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Kinesiología y osteopatía. Su consultorio principal donde realiza atención clínica privada está en el CKO."
+            },
+            {
+                id: "9",
+                name: "Lic. Podzamczer, Jorge",
+                specialty: "Kinesiología",
+                zone: "Palermo / Belgrano",
+                location: "FLENI / Consultorio Privado",
+                phone: "54 11 6036-8227",
+                phone2: "54 11 4821-2795",
+                address: "Billinghurst 1566, Piso 1",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Kinesiólogo y fisiatra especialista en rehabilitación neurológica y tratamiento del dolor. ACV, Parkinson, esclerosis múltiple, lesiones medulares. Excelente y amoroso."
+            },
+            {
+                id: "10",
+                name: "Lic. Sarmiento, Araceli",
+                specialty: "Kinesiología",
+                zone: "CABA",
+                location: "Consultorio Privado",
+                phone: "54 11 3533-684102",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Kinesiología general. Kinesióloga buenísima."
+            },
+            {
+                id: "11",
+                name: "Tony y Majo",
+                specialty: "Kinesiología",
+                zone: "CABA",
+                location: "Atención Privada",
+                phone: "54 11 3901-2465",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Equipo de kinesiólogos recomendados."
+            },
+            {
+                id: "12",
+                name: "Lic. Vargas, Irina",
+                specialty: "Kinesiología",
+                zone: "Balvanera / Recoleta",
+                location: "Pain Care / Domicilio",
+                phone: "54 9 11 3055-2537",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: true,
+                virtual: false,
+                notes: "Fisioterapeuta, RPG (Reeducación Postural Global), Kinesiología y Stretching Global Activo. Excelente. Domicilios en Recoleta, Barrio Norte, Balvanera."
+            },
+            {
+                id: "13",
+                name: "Pain Care / Dr. Guaycochea",
+                specialty: "Medicina del Dolor",
+                zone: "Balvanera, CABA",
+                location: "Centro Pain Care",
+                phone: "54 11 4961-6468",
+                phone2: "54 11 4961-6619",
+                address: "Paraguay 2302, Piso 21 'A'",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Centro del dolor dirigido por Dr. Santiago Guaycochea. Equipo: Neurocirugía (Dra. Ana Lovaglio), Psiquiatría (Dra. Jessica Borenstein), Kinesiología (Lic. Irina Vargas, Lic. Mario Lamponi)."
+            },
+            {
+                id: "14",
+                name: "Dr. Allegri, Ricardo",
+                specialty: "Neurología",
+                zone: "Belgrano / Barrio Norte",
+                location: "FLENI / Consultorio Privado",
+                phone: "54 11 4823-1445",
+                phone2: "54 11 4821-3607",
+                address: "Av. Santa Fe 2245, P.1",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Neuropsiquiatría y Neuropsicología. Memoria. Deterioro cognitivo. Jefe de Neurología Cognitiva del FLENI. Especialista de renombre en memoria."
+            },
+            {
+                id: "15",
+                name: "Dra. Casas, Magdalena",
+                specialty: "Neurología",
+                zone: "CABA",
+                location: "La Trinidad / Hosp. Ramos Mejía / Hosp. Alemán",
+                phone: "",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Neuróloga, especialista en Esclerosis Múltiple. Atiende en La Trinidad (Av. Córdoba), Hosp. Ramos Mejía y Hosp. Alemán."
+            },
+            {
+                id: "16",
+                name: "Dr. Castro, Diego",
+                specialty: "Neurología",
+                zone: "Palermo / Almagro",
+                location: "CEMIC / Consultorio Privado",
+                phone: "",
+                phone2: "",
+                address: "Castro Barros 292",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Neurología cognitiva. Memoria. Neurólogo enfocado en trastornos de la memoria."
+            },
+            {
+                id: "17",
+                name: "Dr. Caride, Alejandro",
+                specialty: "Neurología",
+                zone: "Recoleta, CABA",
+                location: "Hospital Alemán / Consultorio Particular",
+                phone: "54 11 4829-9140",
+                phone2: "",
+                address: "Recoleta (3 a 7 pm)",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Jefe de Neurología del Hospital Alemán y consultorio privado. Altamente recomendado para pacientes post ACV."
+            },
+            {
+                id: "18",
+                name: "Dra. Cecilia Fernandez",
+                specialty: "Neurología",
+                zone: "CABA",
+                location: "Hospital Italiano / Consultorio Particular",
+                phone: "54 11 6159-5361",
+                phone2: "54 11 6188-3070",
+                address: "Marcelo T. Alvear 2442 PB 1",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Neuróloga del Hospital Italiano y consultorio privado. Instagram: @drafernandezmc"
+            },
+            {
+                id: "19",
+                name: "Dr. Gomez Arevalo, Gonzalo",
+                specialty: "Neurología",
+                zone: "Olivos / AMBA",
+                location: "Consultorio Privado / Domicilio",
+                phone: "54 11 4183-4100",
+                phone2: "",
+                address: "Av del Libertador 1907",
+                pami: false,
+                domicilio: true,
+                virtual: false,
+                notes: "Neurología. Movimientos anormales y Parkinson. Consultorio por la tarde. Domicilios por AMBA e interior. Exclusivamente privado."
+            },
+            {
+                id: "20",
+                name: "Dr. Merello",
+                specialty: "Neurología",
+                zone: "Belgrano / Recoleta",
+                location: "FLENI / Consultorio Privado",
+                phone: "54 11 2252-1293",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Jefe de Movimientos Anormales en el FLENI. Excelente trayectoria."
+            },
+            {
+                id: "21",
+                name: "Dr. Miranda",
+                specialty: "Neurología",
+                zone: "Palermo, CABA",
+                location: "Consultorio Palermo",
+                phone: "54 11 3301-5602",
+                phone2: "",
+                address: "A 2 cuadras de Sta Fe y Scalabrini Ortiz",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Atiende por OSDE y amplio rango de prepagas. Consultas muy accesibles."
+            },
+            {
+                id: "22",
+                name: "Dr. Víctor Gastón Moreno Milicich",
+                specialty: "Neurología",
+                zone: "Palermo, CABA",
+                location: "La Trinidad / Hospital Italiano / FLENI",
+                phone: "54 11 5007-4967",
+                phone2: "",
+                address: "Av Santa Fe 3288 piso 4 dto A",
+                pami: false,
+                domicilio: true,
+                virtual: true,
+                notes: "Neurólogo Cognitivo. Trastornos de la memoria, conducta, Parkinson y neurofisiología clínica. Evaluaciones virtuales y visitas a domicilio/geriátricos en CABA."
+            },
+            {
+                id: "23",
+                name: "Dr. Perez Leguizamón, Patricio",
+                specialty: "Neurología",
+                zone: "San Isidro / CABA",
+                location: "CEMIC / Consultorio San Isidro",
+                phone: "",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Excelente neurólogo, muy cálido y dedicado. Atiende en CEMIC y en San Isidro (algunas prepagas)."
+            },
+            {
+                id: "24",
+                name: "Dr. Previgliano",
+                specialty: "Neurología",
+                zone: "Recoleta / Zona Norte",
+                location: "IADT / Consultorio Privado",
+                phone: "54 11 3351-5541",
+                phone2: "54 11 4822-4320",
+                address: "Azcuénaga 1061 / M.T. de Alvear 2400",
+                pami: false,
+                domicilio: false,
+                virtual: true,
+                notes: "Jefe de Neurología del IADT. Terapia Intensiva, eventos neurovasculares y ataque cerebral (ACV). Ex-FLENI y ex-director del Hosp. Fernández. Recomendado para demencia vascular."
+            },
+            {
+                id: "25",
+                name: "Dra. Seijas, Maria Belen",
+                specialty: "Neurología",
+                zone: "Quilmes / Balvanera",
+                location: "Hospital Español",
+                phone: "54 11 4959-6200",
+                phone2: "54 11 6950-9851",
+                address: "Av. Belgrano 2975",
+                pami: true,
+                domicilio: false,
+                virtual: false,
+                notes: "Neuróloga en el Hospital Español de Bs. As. Acepta PAMI."
+            },
+            {
+                id: "26",
+                name: "Dr. Bernater",
+                specialty: "Neurología",
+                zone: "La Paternal, CABA",
+                location: "Consultorio PAMI",
+                phone: "54 9 11 4583-5560",
+                phone2: "",
+                address: "Donato Álvarez 1920",
+                pami: true,
+                domicilio: false,
+                virtual: false,
+                notes: "Neurólogo recomendado con atención para afiliados de PAMI."
+            },
+            {
+                id: "27",
+                name: "Dra. Susana Liliana Cura",
+                specialty: "Oftalmología",
+                zone: "Almagro, CABA",
+                location: "Hospital Italiano",
+                phone: "54 11 4959-0300",
+                phone2: "54 11 4959-0200",
+                address: "Gral. Juan Domingo Perón 4190",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Jefa de la Sección Retina y Vítreo del servicio de Oftalmología del Hospital Italiano. Especialista en casos complejos."
+            },
+            {
+                id: "28",
+                name: "Dr. Casiraghi, Javier",
+                specialty: "Oftalmología",
+                zone: "Recoleta, CABA",
+                location: "Consultorio Privado",
+                phone: "54 11 6539-1086",
+                phone2: "",
+                address: "Arenales 2245, Piso 4",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Especialista en glaucoma y cataratas. Muy recomendado. No trabaja con obra social."
+            },
+            {
+                id: "29",
+                name: "Dr. Saenz Valiente, Agustín",
+                specialty: "Oftalmología",
+                zone: "Recoleta, CABA",
+                location: "Consultorio Privado",
+                phone: "54 11 4815-1830",
+                phone2: "",
+                address: "Av. Quintana 189, 3º 'A'",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Cirugías de cataratas, córnea y refractiva. Altamente recomendado."
+            },
+            {
+                id: "30",
+                name: "Dr. Begue, Alejandro Luis",
+                specialty: "Psiquiatría",
+                zone: "Coghlan, CABA",
+                location: "Consultorio / Domicilio / Geriátricos",
+                phone: "54 11 4532-9742",
+                phone2: "",
+                address: "Pinto 3207 (entre M. Pedraza y Tamborini)",
+                pami: false,
+                domicilio: true,
+                virtual: false,
+                notes: "Psicoanalista, Psicogerontólogo. Tratamientos para adultos mayores en domicilio y geriátricos. Ayuda a centralizar organización (acompañantes, controles)."
+            },
+            {
+                id: "31",
+                name: "Dr. Carísimo, Edgardo",
+                specialty: "Psiquiatría",
+                zone: "San Isidro",
+                location: "Consultorio Privado",
+                phone: "54 11 5699-4099",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Especialista en Psiquiatría y Cardiología."
+            },
+            {
+                id: "32",
+                name: "Dra. Carrozzino Maria Eugenia",
+                specialty: "Psiquiatría",
+                zone: "Beccar",
+                location: "Consultorio Privado",
+                phone: "54 11 6534-3009",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Excelente, seria, muy criteriosa y cariñosa."
+            },
+            {
+                id: "33",
+                name: "Dr. Chiaretta, Luciano",
+                specialty: "Psiquiatría",
+                zone: "San Fernando / San Martín",
+                location: "Consultorio Privado",
+                phone: "54 11 6121-2724",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Médico Psiquiatra de adultos."
+            },
+            {
+                id: "34",
+                name: "Dra. Cohen Ce, Vero",
+                specialty: "Psiquiatría",
+                zone: "CABA",
+                location: "Atención Privada",
+                phone: "54 11 6254-2002",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Médica Legista, Magíster en Psicofarmacología. Realiza informes CUD (Certificado Único de Discapacidad)."
+            },
+            {
+                id: "35",
+                name: "Dra. Di Pietro, Claudia",
+                specialty: "Psiquiatría",
+                zone: "Beccar / San Isidro",
+                location: "Consultorio Privado",
+                phone: "54 11 5494-4899",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Atención psiquiátrica de adultos."
+            },
+            {
+                id: "36",
+                name: "Dr. Kuttel, Maximiliano",
+                specialty: "Psiquiatría",
+                zone: "Almagro, CABA",
+                location: "Hospital Italiano",
+                phone: "54 11 5517-7038",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Médico Psiquiatra del Hospital Italiano."
+            },
+            {
+                id: "37",
+                name: "Dra. Mesples, Ursula",
+                specialty: "Psiquiatría",
+                zone: "San Isidro, CABA",
+                location: "CEMIC",
+                phone: "54 11 4186-6027",
+                phone2: "",
+                address: "",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Psiquiatra del staff de CEMIC."
+            },
+            {
+                id: "38",
+                name: "Dr. Larré, Nicolás",
+                specialty: "Psiquiatría",
+                zone: "Almagro, CABA",
+                location: "Consultorio Privado",
+                phone: "54 11 4861-5586",
+                phone2: "",
+                address: "Sarmiento 4041, 1º Piso, Oficina 10",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Atención psiquiátrica privada."
+            },
+            {
+                id: "39",
+                name: "Dra. Palacio, Laura",
+                specialty: "Psiquiatría",
+                zone: "Recoleta, CABA",
+                location: "Consultorio Privado / Fund. Salud Mental",
+                phone: "54 11 4147-1596",
+                phone2: "",
+                address: "Agüero 1287 / Posadas 1575 4° C",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Especialista en psico-gerontología. Taller de estimulación cognitiva en Fundación Argentina de Salud Mental."
+            },
+            {
+                id: "40",
+                name: "Dra. Pereyra, Silvia",
+                specialty: "Neuropsicología",
+                zone: "Palermo / Olivos",
+                location: "Consultorio Privado",
+                phone: "54 11 3261-6207",
+                phone2: "",
+                address: "Olivos / Cerca de Alto Palermo",
+                pami: false,
+                domicilio: false,
+                virtual: false,
+                notes: "Neuropsicóloga y fonoaudióloga. Excelente experiencia en problemas cognitivos post-accidente y rehabilitación del lenguaje."
+            },
+            {
+                id: "41",
+                name: "Dr. Vinacour, Carlos",
+                specialty: "Psiquiatría",
+                zone: "Palermo, CABA",
+                location: "CEMIC / Consultorio Palermo",
+                phone: "54 11 5969-3566",
+                phone2: "",
+                address: "Las Heras y Ugarteche, Palermo",
+                pami: false,
+                domicilio: false,
+                virtual: true,
+                notes: "Mucha paciencia con personas mayores. Muy atento en el seguimiento constante."
+            },
+            {
+                id: "42",
+                name: "Dr. Cutuli",
+                specialty: "Oncología",
+                zone: "CABA",
+                location: "Sanatorio Sirio Libanés",
+                phone: "",
+                phone2: "",
+                address: "",
+                pami: true,
+                domicilio: false,
+                virtual: false,
+                notes: "Recomendado para cáncer de próstata y oncología general. Atiende PAMI y otorgan turnos con rapidez."
+            }
+        ];
+
+        // Global State Variable
+        let doctorsData = [];
+        let activeFilters = {
+            pami: false,
+            domicilio: false
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            loadInitialData();
+            populateFilterOptions();
+            applyFilters();
+            
+            // Close dropdowns on outside click
+            window.addEventListener('click', (e) => {
+                const btn = document.getElementById('dataMenuBtn');
+                const menu = document.getElementById('dataMenu');
+                if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Load data from LocalStorage or Fallback to Default
+        function loadInitialData() {
+            const stored = localStorage.getItem('recommended_doctors_db');
+            if (stored) {
+                try {
+                    doctorsData = JSON.parse(stored);
+                } catch(e) {
+                    console.error("Error reading localStorage, resetting to default.", e);
+                    doctorsData = [...INITIAL_DOCTORS];
+                }
+            } else {
+                doctorsData = [...INITIAL_DOCTORS];
+                saveToLocalStorage();
+            }
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('recommended_doctors_db', JSON.stringify(doctorsData));
+        }
+
+        // Dynamically Populate Filter Dropdowns
+        function populateFilterOptions() {
+            const specialtySelect = document.getElementById('specialtyFilter');
+            const zoneSelect = document.getElementById('zoneFilter');
+            const institutionSelect = document.getElementById('institutionFilter');
+
+            // Collect unique values
+            const specialties = new Set();
+            const zones = new Set();
+            const institutions = new Set();
+
+            doctorsData.forEach(d => {
+                if(d.specialty) specialties.add(d.specialty.trim());
+                if(d.zone) {
+                    d.zone.split(/[,/]/).forEach(z => {
+                        if(z.trim()) zones.add(z.trim());
+                    });
+                }
+                if(d.location) {
+                    d.location.split(/[,/]/).forEach(i => {
+                        if(i.trim()) institutions.add(i.trim());
+                    });
+                }
+            });
+
+            // Populate Specialty
+            specialtySelect.innerHTML = '<option value="">Todas las Especialidades</option>';
+            Array.from(specialties).sort().forEach(s => {
+                specialtySelect.innerHTML += `<option value="${s}">${s}</option>`;
+            });
+
+            // Populate Zone
+            zoneSelect.innerHTML = '<option value="">Todas las Zonas</option>';
+            Array.from(zones).sort().forEach(z => {
+                zoneSelect.innerHTML += `<option value="${z}">${z}</option>`;
+            });
+
+            // Populate Institutions
+            institutionSelect.innerHTML = '<option value="">Cualquier Lugar / Sanatorio</option>';
+            Array.from(institutions).sort().forEach(inst => {
+                institutionSelect.innerHTML += `<option value="${inst}">${inst}</option>`;
+            });
+        }
+
+        // Main Search & Filter Logic
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const specialtyVal = document.getElementById('specialtyFilter').value;
+            const zoneVal = document.getElementById('zoneFilter').value;
+            const instVal = document.getElementById('institutionFilter').value;
+            const clearBtn = document.getElementById('clearSearchBtn');
+
+            if(query.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
+            const filtered = doctorsData.filter(d => {
+                // Text search
+                const matchQuery = !query || 
+                    d.name.toLowerCase().includes(query) ||
+                    d.specialty.toLowerCase().includes(query) ||
+                    d.zone.toLowerCase().includes(query) ||
+                    d.location.toLowerCase().includes(query) ||
+                    d.notes.toLowerCase().includes(query) ||
+                    d.address.toLowerCase().includes(query);
+
+                // Select filters
+                const matchSpecialty = !specialtyVal || d.specialty === specialtyVal;
+                const matchZone = !zoneVal || d.zone.includes(zoneVal);
+                const matchInst = !instVal || d.location.includes(instVal);
+
+                // Toggles
+                const matchPami = !activeFilters.pami || d.pami;
+                const matchDomicilio = !activeFilters.domicilio || d.domicilio;
+
+                return matchQuery && matchSpecialty && matchZone && matchInst && matchPami && matchDomicilio;
+            });
+
+            renderCards(filtered);
+            updateCounter(filtered.length, doctorsData.length);
+        }
+
+        // Render Doctor Cards
+        function renderCards(doctors) {
+            const grid = document.getElementById('doctorsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (doctors.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = doctors.map(d => {
+                const phoneClean = d.phone ? d.phone.replace(/[^0-9]/g, '') : '';
+                const phone2Clean = d.phone2 ? d.phone2.replace(/[^0-9]/g, '') : '';
+
+                return `
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden group">
+                    <div class="p-5 space-y-3.5">
+                        
+                        <!-- Top Header: Name & Specialty -->
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-teal-50 text-teal-700 border border-teal-200/60 mb-1.5">
+                                    ${escapeHtml(d.specialty)}
+                                </span>
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-teal-600 transition-colors">
+                                    ${escapeHtml(d.name)}
+                                </h3>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <button onclick="openEditModal('${d.id}')" class="p-1.5 text-slate-400 hover:text-teal-600 rounded-lg hover:bg-slate-50 transition-colors" title="Editar profesional">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                                <button onclick="deleteDoctor('${d.id}')" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors" title="Eliminar profesional">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Location & Zone Badges -->
+                        <div class="space-y-1.5 text-xs sm:text-sm text-slate-600">
+                            ${d.zone ? `
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot text-slate-400 w-4 text-center"></i>
+                                <span class="font-medium text-slate-700">${escapeHtml(d.zone)}</span>
+                            </div>` : ''}
+
+                            ${d.location ? `
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-hospital text-slate-400 w-4 text-center"></i>
+                                <span>${escapeHtml(d.location)}</span>
+                            </div>` : ''}
+
+                            ${d.address ? `
+                            <div class="flex items-start gap-2">
+                                <i class="fa-solid fa-map-pin text-slate-400 w-4 text-center mt-0.5"></i>
+                                <span class="text-slate-500">${escapeHtml(d.address)}</span>
+                            </div>` : ''}
+                        </div>
+
+                        <!-- Badges for Attributes (PAMI, Domicilio, Virtual) -->
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            ${d.pami ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200"><i class="fa-solid fa-id-card"></i> PAMI</span>' : ''}
+                            ${d.domicilio ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200"><i class="fa-solid fa-house-medical"></i> A Domicilio</span>' : ''}
+                            ${d.virtual ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-indigo-50 text-indigo-700 border border-indigo-200"><i class="fa-solid fa-video"></i> Consulta Virtual</span>' : ''}
+                        </div>
+
+                        <!-- Notes Section -->
+                        ${d.notes ? `
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs text-slate-600 leading-relaxed">
+                            <i class="fa-solid fa-circle-info text-teal-600 mr-1"></i>
+                            ${escapeHtml(d.notes)}
+                        </div>` : ''}
+
+                    </div>
+
+                    <!-- Card Actions / Phone Buttons -->
+                    <div class="px-5 py-3.5 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 w-full">
+                            ${d.phone ? `
+                            <a href="tel:${phoneClean}" class="flex-1 inline-flex items-center justify-center gap-1.5 bg-white border border-slate-200 hover:border-teal-500 hover:text-teal-600 text-slate-700 px-3 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all duration-150">
+                                <i class="fa-solid fa-phone text-teal-500"></i> ${escapeHtml(d.phone)}
+                            </a>
+                            <a href="https://wa.me/${phoneClean}" target="_blank" class="p-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs transition-colors shadow-sm" title="Contactar por WhatsApp">
+                                <i class="fa-brands fa-whatsapp text-sm"></i>
+                            </a>
+                            ` : ''}
+
+                            ${!d.phone && d.phone2 ? `
+                            <a href="tel:${phone2Clean}" class="flex-1 inline-flex items-center justify-center gap-1.5 bg-white border border-slate-200 hover:border-teal-500 hover:text-teal-600 text-slate-700 px-3 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all duration-150">
+                                <i class="fa-solid fa-phone text-teal-500"></i> ${escapeHtml(d.phone2)}
+                            </a>
+                            ` : ''}
+
+                            ${!d.phone && !d.phone2 ? `
+                            <span class="text-xs text-slate-400 italic">Contacto no registrado</span>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // Toggle Filter Buttons
+        function toggleFilter(type) {
+            activeFilters[type] = !activeFilters[type];
+            const btn = document.getElementById(`${type}Toggle`);
+
+            if (activeFilters[type]) {
+                btn.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                btn.classList.add('bg-teal-600', 'text-white', 'border-teal-600', 'shadow-sm');
+            } else {
+                btn.classList.remove('bg-teal-600', 'text-white', 'border-teal-600', 'shadow-sm');
+                btn.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+            }
+
+            applyFilters();
+        }
+
+        // Reset All Filters
+        function resetAllFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('specialtyFilter').value = '';
+            document.getElementById('zoneFilter').value = '';
+            document.getElementById('institutionFilter').value = '';
+
+            activeFilters.pami = false;
+            activeFilters.domicilio = false;
+
+            ['pamiToggle', 'domicilioToggle'].forEach(id => {
+                const btn = document.getElementById(id);
+                btn.classList.remove('bg-teal-600', 'text-white', 'border-teal-600', 'shadow-sm');
+                btn.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+            });
+
+            applyFilters();
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            applyFilters();
+        }
+
+        function updateCounter(showing, total) {
+            document.getElementById('resultsCount').innerHTML = `Mostrando <span class="font-bold text-teal-700">${showing}</span> de ${total} profesionales`;
+        }
+
+        // Modal Controls
+        function openAddModal() {
+            document.getElementById('doctorId').value = '';
+            document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-user-plus text-teal-600"></i> Agregar Nuevo Profesional';
+            document.getElementById('doctorForm').reset();
+            document.getElementById('doctorModal').classList.remove('hidden');
+        }
+
+        function openEditModal(id) {
+            const doc = doctorsData.find(d => d.id === id);
+            if (!doc) return;
+
+            document.getElementById('doctorId').value = doc.id;
+            document.getElementById('modalTitle').innerHTML = '<i class="fa-regular fa-pen-to-square text-teal-600"></i> Editar Profesional';
+            
+            document.getElementById('formName').value = doc.name || '';
+            document.getElementById('formSpecialty').value = doc.specialty || '';
+            document.getElementById('formZone').value = doc.zone || '';
+            document.getElementById('formLocation').value = doc.location || '';
+            document.getElementById('formPhone').value = doc.phone || '';
+            document.getElementById('formPhone2').value = doc.phone2 || '';
+            document.getElementById('formAddress').value = doc.address || '';
+            document.getElementById('formPami').checked = doc.pami || false;
+            document.getElementById('formDomicilio').checked = doc.domicilio || false;
+            document.getElementById('formVirtual').checked = doc.virtual || false;
+            document.getElementById('formNotes').value = doc.notes || '';
+
+            document.getElementById('doctorModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('doctorModal').classList.add('hidden');
+        }
+
+        // Save Doctor Form Submit
+        function saveDoctor(e) {
+            e.preventDefault();
+
+            const id = document.getElementById('doctorId').value;
+            const newDoc = {
+                id: id ? id : Date.now().toString(),
+                name: document.getElementById('formName').value.trim(),
+                specialty: document.getElementById('formSpecialty').value.trim(),
+                zone: document.getElementById('formZone').value.trim(),
+                location: document.getElementById('formLocation').value.trim(),
+                phone: document.getElementById('formPhone').value.trim(),
+                phone2: document.getElementById('formPhone2').value.trim(),
+                address: document.getElementById('formAddress').value.trim(),
+                pami: document.getElementById('formPami').checked,
+                domicilio: document.getElementById('formDomicilio').checked,
+                virtual: document.getElementById('formVirtual').checked,
+                notes: document.getElementById('formNotes').value.trim()
+            };
+
+            if (id) {
+                // Update existing
+                const index = doctorsData.findIndex(d => d.id === id);
+                if (index !== -1) doctorsData[index] = newDoc;
+                showToast('Profesional actualizado correctamente');
+            } else {
+                // Add new
+                doctorsData.unshift(newDoc);
+                showToast('Nuevo profesional agregado');
+            }
+
+            saveToLocalStorage();
+            populateFilterOptions();
+            applyFilters();
+            closeModal();
+        }
+
+        // Delete Doctor
+        function deleteDoctor(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este profesional?')) {
+                doctorsData = doctorsData.filter(d => d.id !== id);
+                saveToLocalStorage();
+                populateFilterOptions();
+                applyFilters();
+                showToast('Profesional eliminado');
+            }
+        }
+
+        // Backup / Data Management
+        function toggleDataMenu() {
+            document.getElementById('dataMenu').classList.toggle('hidden');
+        }
+
+        function exportJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(doctorsData, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `medicos_recomendados_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            showToast('Backup exportado como JSON');
+        }
+
+        function exportCSV() {
+            if (doctorsData.length === 0) return;
+            
+            const headers = ["Nombre", "Especialidad", "Barrio/Zona", "Lugar/Sanatorio", "Telefono 1", "Telefono 2", "Direccion", "PAMI", "Domicilio", "Virtual", "Notas"];
+            const rows = doctorsData.map(d => [
+                `"${(d.name || '').replace(/"/g, '""')}"`,
+                `"${(d.specialty || '').replace(/"/g, '""')}"`,
+                `"${(d.zone || '').replace(/"/g, '""')}"`,
+                `"${(d.location || '').replace(/"/g, '""')}"`,
+                `"${(d.phone || '').replace(/"/g, '""')}"`,
+                `"${(d.phone2 || '').replace(/"/g, '""')}"`,
+                `"${(d.address || '').replace(/"/g, '""')}"`,
+                d.pami ? "SI" : "NO",
+                d.domicilio ? "SI" : "NO",
+                d.virtual ? "SI" : "NO",
+                `"${(d.notes || '').replace(/"/g, '""')}"`
+            ]);
+
+            const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `medicos_recomendados_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            showToast('Archivo CSV descargado');
+        }
+
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (Array.isArray(imported)) {
+                        doctorsData = imported;
+                        saveToLocalStorage();
+                        populateFilterOptions();
+                        applyFilters();
+                        showToast('Base de datos importada exitosamente');
+                    } else {
+                        alert('El archivo JSON no tiene un formato válido.');
+                    }
+                } catch(err) {
+                    alert('Error al leer el archivo JSON.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetData() {
+            if (confirm('¿Restaurar la lista original de médicos descartando los cambios locales?')) {
+                doctorsData = [...INITIAL_DOCTORS];
+                saveToLocalStorage();
+                populateFilterOptions();
+                applyFilters();
+                showToast('Lista restaurada al estado inicial');
+            }
+        }
+
+        // Helper: Toast Notifications
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Helper: Sanitize HTML strings
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
